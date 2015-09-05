@@ -5,4 +5,31 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="texto">
+        <item name="android:textSize">20dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="subtitulo" parent="texto">
+        <item name="android:textSize">20dp</item>
+    </style>
+    <style name="numero" parent="texto">
+        <item name="android:gravity">right</item>
+    </style>
+    <style name="editNumero" parent="numero">
+        <item name="android:inputType">number</item>
+    </style>
+    <style name="editNumeroLargFixa" parent="editNumero">
+        <item name="android:width">35dp</item>
+    </style>
+    <style name="SimpleButton" parent="@style/Widget.AppCompat.Button.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="PlusButton" parent="SimpleButton">
+        <item name="android:text">+</item>
+    </style>
+    <style name="MinusButton" parent="SimpleButton">
+        <item name="android:text">-</item>
+    </style>
 </resources>
