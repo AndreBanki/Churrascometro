@@ -2,5 +2,7 @@
     <string name="app_name">Churrascômetro</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurações</string>
+    <string name="ajuda">Este cálculo foi feito usando valores médios de consumo por pessoa.
+                         Você pode alterá-los no botão Configurações"</string>
 </resources>
