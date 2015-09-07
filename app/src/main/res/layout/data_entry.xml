@@ -1,0 +1,53 @@
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="10dp"
+    android:stretchColumns="0">
+    <TextView style="@style/subtitulo"
+        android:text="Quantas pessoas você convidou para a sua festa?" />
+    <TableRow>
+        <TextView style="@style/texto"
+            android:text="Homens:" />
+
+        <Button style="@style/PlusButton"
+            android:id="@+id/btnMaisHomens" />
+
+        <EditText style="@style/editNumeroLargFixa"
+            android:id="@+id/editHomens"
+            android:text="10" />
+
+        <Button style="@style/MinusButton"
+            android:id="@+id/btnMenosHomens" />
+    </TableRow>
+    <TableRow>
+        <TextView style="@style/texto"
+            android:text="Mulheres:" />
+
+        <Button style="@style/PlusButton"
+            android:id="@+id/btnMaisMulheres" />
+
+        <EditText style="@style/editNumeroLargFixa"
+            android:id="@+id/editMulheres"
+            android:text="10" />
+
+        <Button style="@style/MinusButton"
+            android:id="@+id/btnMenosMulheres" />
+    </TableRow>
+    <TableRow>
+        <TextView style="@style/texto"
+            android:text="Crianças:" />
+
+        <Button style="@style/PlusButton"
+            android:id="@+id/btnMaisCriancas" />
+
+        <EditText style="@style/editNumeroLargFixa"
+            android:id="@+id/editCriancas"
+            android:text="5" />
+
+        <Button style="@style/MinusButton"
+            android:id="@+id/btnMenosCriancas" />
+    </TableRow>
+</TableLayout>

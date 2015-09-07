@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="10dp"
+    style="@android:style/ButtonBar">
+
+    <TextView style="@style/subtitulo"
+        android:text="Você precisa comprar:"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="2dp" />
+
+    <TableLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0">
+        <TableRow>
+            <CheckBox style="@style/texto"
+                android:id="@+id/checkCarne"
+                android:text="Carne:"
+                android:checked="true" />
+
+            <TextView style="@style/numero"
+                android:id="@+id/resultCarne"
+                android:text="5,0 kg" />
+        </TableRow>
+        <TableRow>
+            <CheckBox style="@style/texto"
+                android:id="@+id/checkLinguica"
+                android:text="Linguiça:"
+                android:checked="true" />
+
+            <TextView style="@style/numero"
+                android:id="@+id/resultLinguica"
+                android:text="2,5 kg" />
+        </TableRow>
+        <TableRow>
+            <CheckBox style="@style/texto"
+                android:id="@+id/checkCerveja"
+                android:text="Cerveja:"
+                android:checked="true" />
+
+            <TextView style="@style/numero"
+                android:id="@+id/resultCerveja"
+                android:text="12,0 l"
+                />
+        </TableRow>
+        <TableRow>
+            <CheckBox style="@style/texto"
+                android:id="@+id/checkRefri"
+                android:text="Refrigerante:"
+                android:checked="true" />
+
+            <TextView style="@style/numero"
+                android:id="@+id/resultRefri"
+                android:text="6,0 l" />
+        </TableRow>
+    </TableLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button style="@style/SimpleButton"
+            android:id="@+id/btnConfig"
+            android:text="Config"
+            android:layout_alignParentLeft="true" />
+
+        <Button style="@style/SimpleButton"
+            android:id="@+id/btnAjuda"
+            android:text="Ajuda"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+</LinearLayout>
