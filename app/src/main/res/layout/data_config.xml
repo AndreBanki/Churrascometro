@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="10dp">
+
+    <TextView style="@style/subtitulo"
+        android:text="Consumo médio por pessoa:"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="2dp" />
+
+    <TableLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
+        <TableRow>
+            <TextView style="@style/texto"
+                android:text="Carne (kg):" />
+
+            <EditText style="@style/editNumero"
+                android:id="@+id/editCarne"
+                android:text="5,0" />
+        </TableRow>
+        <TableRow>
+            <TextView style="@style/texto"
+                android:text="Linguiça (kg):" />
+
+            <EditText style="@style/editNumero"
+                android:id="@+id/editLinguica"
+                android:text="2,5" />
+        </TableRow>
+        <TableRow>
+            <TextView style="@style/texto"
+                android:text="Cerveja (l):" />
+
+            <EditText style="@style/editNumero"
+                android:id="@+id/editCerveja"
+                android:text="12,0"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView style="@style/texto"
+                android:text="Refrigerante (l):" />
+
+            <EditText style="@style/editNumero"
+                android:id="@+id/editRefri"
+                android:text="6,0" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

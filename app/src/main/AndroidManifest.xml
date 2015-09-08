@@ -19,6 +19,7 @@
         <activity
             android:name=".ConfigActivity"
             android:label="@string/action_settings" />
+        <activity android:name=".ConfigTabActivity"/>
     </application>
 
 </manifest>
