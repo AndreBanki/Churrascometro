@@ -8,7 +8,8 @@
     android:layout_marginTop="10dp">
 
     <TextView style="@style/subtitulo"
-        android:text="Consumo médio por pessoa:"
+        android:id="@+id/editTitulo"
+        android:text="Consumo médio por pessoa: "
         android:layout_marginBottom="5dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="2dp" />

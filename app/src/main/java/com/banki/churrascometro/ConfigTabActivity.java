@@ -12,5 +12,9 @@ public class ConfigTabActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data_config);
+
+        TextView titulo = (TextView)findViewById(R.id.editTitulo);
+        String tipo = getIntent().getStringExtra("tipo");
+        titulo.append(tipo);
     }
 }

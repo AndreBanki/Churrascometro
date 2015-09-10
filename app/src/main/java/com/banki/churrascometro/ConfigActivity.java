@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+import android.widget.TabWidget;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ConfigActivity extends TabActivity {
 
@@ -14,24 +18,17 @@ public class ConfigActivity extends TabActivity {
         setContentView(R.layout.activity_config);
 
         TabHost tabHost = getTabHost();
+        ArrayList<String> tipos = new ArrayList<String>(
+                Arrays.asList("Homens", "Mulheres", "Crianças"));
+        int nTabs = tipos.size();
 
-        TabSpec tab1 = tabHost.newTabSpec("Homens");
-        tab1.setIndicator("Homens");
-        Intent intent1 = new Intent(this, ConfigTabActivity.class);
-        tab1.setContent(intent1);
-
-        TabSpec tab2 = tabHost.newTabSpec("Mulheres");
-        tab2.setIndicator("Mulheres");
-        Intent intent2 = new Intent(this, ConfigTabActivity.class);
-        tab2.setContent(intent2);
-
-        TabSpec tab3 = tabHost.newTabSpec("Crianças");
-        tab3.setIndicator("Crianças");
-        Intent intent3 = new Intent(this, ConfigTabActivity.class);
-        tab3.setContent(intent3);
-
-        tabHost.addTab(tab1);
-        tabHost.addTab(tab2);
-        tabHost.addTab(tab3);
+        for (int i = 0; i < nTabs; i++) {
+            TabSpec tab = tabHost.newTabSpec(tipos.get(i));
+            tab.setIndicator(tipos.get(i));
+            Intent intent = new Intent(this, ConfigTabActivity.class);
+            intent.putExtra("tipo",tipos.get(i));
+            tab.setContent(intent);
+            tabHost.addTab(tab);
+        }
     }
 }
