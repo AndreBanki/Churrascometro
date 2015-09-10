@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         criaBtnAjuda();
-        criaBtnConfig();
     }
 
     private void criaBtnAjuda() {
@@ -31,17 +30,6 @@ public class MainActivity extends AppCompatActivity {
                         R.string.ajuda,
                         LENGTH_LONG);
                 t.show();
-            }
-        });
-    }
-
-    private void criaBtnConfig() {
-        Button btnConfig = (Button)findViewById(R.id.btnConfig);
-        btnConfig.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ConfigActivity.class);
-                startActivity(intent);
             }
         });
     }
@@ -61,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.btnConfig) {
+            Intent intent = new Intent(MainActivity.this, ConfigActivity.class);
+            startActivity(intent);
             return true;
         }
 

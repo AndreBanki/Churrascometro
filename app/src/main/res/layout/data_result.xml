@@ -66,14 +66,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button style="@style/SimpleButton"
-            android:id="@+id/btnConfig"
-            android:text="Config"
-            android:layout_alignParentLeft="true" />
-
-        <Button style="@style/SimpleButton"
+        <Button
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:id="@+id/btnAjuda"
-            android:text="Ajuda"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:background="@android:drawable/ic_menu_help" />
     </RelativeLayout>
 </LinearLayout>
