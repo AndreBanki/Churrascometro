@@ -18,6 +18,9 @@ import android.widget.Toast;
 import static android.widget.Toast.LENGTH_LONG;
 
 public class MainActivity extends AppCompatActivity {
+
+    ConfigModel config;
+
     // dados que precisam ser acessados nos listeners
     private EditText[] edit = new EditText[ConfigModel.nTiposConvidados];
     private int[] nConvidados = new int[ConfigModel.nTiposConvidados];
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        config = new ConfigModel();
 
         InicializaControles();
         criaBtnAjuda();
@@ -227,25 +232,11 @@ public class MainActivity extends AppCompatActivity {
         result[ConfigModel.CERVEJA] = (TextView)findViewById(R.id.resultCerveja);
         result[ConfigModel.REFRI] = (TextView)findViewById(R.id.resultRefri);
 
-        double[][] parametros = new double[ConfigModel.nTiposConvidados][ConfigModel.nTiposIngredientes];
-        parametros[ConfigModel.HOMENS][ConfigModel.CARNE] = 0.450;
-        parametros[ConfigModel.MULHERES][ConfigModel.CARNE] = 0.300;
-        parametros[ConfigModel.CRIANCAS][ConfigModel.CARNE] = 0.150;
-        parametros[ConfigModel.HOMENS][ConfigModel.LINGUICA] = 0.300;
-        parametros[ConfigModel.MULHERES][ConfigModel.LINGUICA] = 0.200;
-        parametros[ConfigModel.CRIANCAS][ConfigModel.LINGUICA] = 0.050;
-        parametros[ConfigModel.HOMENS][ConfigModel.CERVEJA] = 1.250;
-        parametros[ConfigModel.MULHERES][ConfigModel.CARNE] = 0.500;
-        parametros[ConfigModel.CRIANCAS][ConfigModel.CARNE] = 0;
-        parametros[ConfigModel.HOMENS][ConfigModel.REFRI] = 0.200;
-        parametros[ConfigModel.MULHERES][ConfigModel.REFRI] = 0.500;
-        parametros[ConfigModel.CRIANCAS][ConfigModel.REFRI] = 0.500;
-
         double[] quant = new double[ConfigModel.nTiposIngredientes];
         for (int i=ConfigModel.CARNE; i<=ConfigModel.REFRI;i++) {
             quant[i] = 0;
             for (int j=ConfigModel.HOMENS; j<=ConfigModel.CRIANCAS; j++) {
-                quant[i] += nConvidados[j] * parametros[j][i];
+                quant[i] += nConvidados[j] * config.Consumo(j,i);
             }
         }
 
