@@ -22,8 +22,6 @@
         <TableRow>
             <CheckBox style="@style/CheckBox"
                 android:id="@+id/checkCarne"
-                android:scaleX="1.50"
-                android:scaleY="1.50"
                 android:text="Carne:"
                 android:checked="true" />
 

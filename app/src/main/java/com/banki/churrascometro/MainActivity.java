@@ -18,16 +18,23 @@ import android.widget.Toast;
 import static android.widget.Toast.LENGTH_LONG;
 
 public class MainActivity extends AppCompatActivity {
-
+    // tipos de convidados
+    public final int nTiposConvidados = 3;
     public final int HOMENS = 0;
     public final int MULHERES = 1;
     public final int CRIANCAS = 2;
 
-    private EditText[] edit = new EditText[3];
-    private int[] idEdit = new int[3];
-    private int[] nConvidados = new int[3];
+    // tipos de ingredientes
+    public final int nTiposIngredientes = 4;
+    public final int CARNE = 0;
+    public final int LINGUICA = 1;
+    public final int CERVEJA = 2;
+    public final int REFRI = 3;
 
-    CheckBox checkCarne, checkLinguica, checkCerveja, checkRefri;
+    // dados que precisam ser acessados nos listeners
+    private EditText[] edit = new EditText[nTiposConvidados];
+    private int[] nConvidados = new int[nTiposConvidados];
+    private CheckBox[] check = new CheckBox[nTiposIngredientes];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void InicializaControles() {
+        int[] idEdit = new int[nTiposConvidados];
         idEdit[HOMENS] = R.id.editHomens;
         idEdit[MULHERES] = R.id.editMulheres;
         idEdit[CRIANCAS] = R.id.editCriancas;
@@ -76,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criaBtnMais() {
-        Button[] btnMais = new Button[3];
+        Button[] btnMais = new Button[nTiposConvidados];
 
         btnMais[HOMENS] = (Button)findViewById(R.id.btnMaisHomens);
         btnMais[MULHERES] = (Button)findViewById(R.id.btnMaisMulheres);
@@ -109,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criaBtnMenos() {
-        Button[] btnMenos = new Button[3];
+        Button[] btnMenos = new Button[nTiposConvidados];
 
         btnMenos[HOMENS] = (Button)findViewById(R.id.btnMenosHomens);
         btnMenos[MULHERES] = (Button)findViewById(R.id.btnMenosMulheres);
@@ -190,79 +198,76 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criaCheckListeners() {
-        checkCarne = (CheckBox)findViewById(R.id.checkCarne);
-        checkLinguica = (CheckBox)findViewById(R.id.checkLinguica);
-        checkCerveja = (CheckBox)findViewById(R.id.checkCerveja);
-        checkRefri = (CheckBox)findViewById(R.id.checkRefri);
+        check[CARNE] = (CheckBox)findViewById(R.id.checkCarne);
+        check[LINGUICA] = (CheckBox)findViewById(R.id.checkLinguica);
+        check[CERVEJA] = (CheckBox)findViewById(R.id.checkCerveja);
+        check[REFRI] = (CheckBox)findViewById(R.id.checkRefri);
 
-        checkCarne.setOnClickListener(new View.OnClickListener() {
+        check[CARNE].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkLinguica.setEnabled(checkCarne.isChecked());
+                check[LINGUICA].setEnabled(check[CARNE].isChecked());
                 calcula();
             }
         });
-        checkLinguica.setOnClickListener(new View.OnClickListener() {
+        check[LINGUICA].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkCarne.setEnabled(checkLinguica.isChecked());
+                check[CARNE].setEnabled(check[LINGUICA].isChecked());
                 calcula();
             }
         });
-        checkCerveja.setOnClickListener(new View.OnClickListener() {
+        check[CERVEJA].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkRefri.setEnabled(checkCerveja.isChecked());
+                check[REFRI].setEnabled(check[CERVEJA].isChecked());
                 calcula();
             }
         });
-        checkRefri.setOnClickListener(new View.OnClickListener() {
+        check[REFRI].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkCerveja.setEnabled(checkRefri.isChecked());
+                check[CERVEJA].setEnabled(check[REFRI].isChecked());
                 calcula();
             }
         });
     }
 
     private void calcula() {
-        TextView resultCarne = (TextView)findViewById(R.id.resultCarne);
-        TextView resultLinguica = (TextView)findViewById(R.id.resultLinguica);
-        TextView resultCerveja = (TextView)findViewById(R.id.resultCerveja);
-        TextView resultRefri = (TextView)findViewById(R.id.resultRefri);
+        TextView[] result = new TextView[nTiposIngredientes];
+        result[CARNE] = (TextView)findViewById(R.id.resultCarne);
+        result[LINGUICA] = (TextView)findViewById(R.id.resultLinguica);
+        result[CERVEJA] = (TextView)findViewById(R.id.resultCerveja);
+        result[REFRI] = (TextView)findViewById(R.id.resultRefri);
 
-        double quantCarne = 0.450 * nConvidados[HOMENS] + 0.300 * nConvidados[MULHERES] + 0.150 * nConvidados[CRIANCAS];
-        double quantLinguica = 0.200 * nConvidados[HOMENS] + 0.200 * nConvidados[MULHERES] + 0.050 * nConvidados[CRIANCAS];
-        double quantCerveja = 1.250 * nConvidados[HOMENS] + 0.500 * nConvidados[MULHERES];
-        double quantRefri = 0.200 * nConvidados[HOMENS] + 0.500 * nConvidados[MULHERES] + 0.500 * nConvidados[CRIANCAS];
+        double[] quant = new double[nTiposIngredientes];
+        quant[CARNE] = 0.450 * nConvidados[HOMENS] + 0.300 * nConvidados[MULHERES] + 0.150 * nConvidados[CRIANCAS];
+        quant[LINGUICA] = 0.200 * nConvidados[HOMENS] + 0.200 * nConvidados[MULHERES] + 0.050 * nConvidados[CRIANCAS];
+        quant[CERVEJA] = 1.250 * nConvidados[HOMENS] + 0.500 * nConvidados[MULHERES];
+        quant[REFRI] = 0.200 * nConvidados[HOMENS] + 0.500 * nConvidados[MULHERES] + 0.500 * nConvidados[CRIANCAS];
 
-        CheckBox checkCarne = (CheckBox)findViewById(R.id.checkCarne);
-        CheckBox checkLinguica = (CheckBox)findViewById(R.id.checkLinguica);
-        CheckBox checkCerveja = (CheckBox)findViewById(R.id.checkCerveja);
-        CheckBox checkRefri = (CheckBox)findViewById(R.id.checkRefri);
-
-        if (!checkCarne.isChecked()) {
-            quantLinguica += quantCarne;
-            quantCarne = 0;
+        if (!check[CARNE].isChecked()) {
+            quant[LINGUICA] += quant[CARNE];
+            quant[CARNE] = 0;
         }
-        else if (!checkLinguica.isChecked()) {
-            quantCarne += quantLinguica;
-            quantLinguica = 0;
+        else if (!check[LINGUICA].isChecked()) {
+            quant[CARNE] += quant[LINGUICA];
+            quant[LINGUICA] = 0;
         }
 
-        if (!checkCerveja.isChecked()) {
-            quantRefri += quantCerveja;
-            quantCerveja = 0;
+        if (!check[CERVEJA].isChecked()) {
+            quant[REFRI] += quant[CERVEJA];
+            quant[CERVEJA] = 0;
         }
-        else if (!checkRefri.isChecked()) {
-            quantCerveja += quantRefri;
-            quantRefri = 0;
+        else if (!check[REFRI].isChecked()) {
+            quant[CERVEJA] += quant[REFRI];
+            quant[REFRI] = 0;
         }
 
-        resultCarne.setText(String.format("%1$,.1f kg",quantCarne));
-        resultLinguica.setText(String.format("%1$,.1f kg",quantLinguica));
-        resultCerveja.setText(String.format("%1$,.1f l",quantCerveja));
-        resultRefri.setText(String.format("%1$,.1f l",quantRefri));
+        result[CARNE].setText(String.format("%1$,.1f kg",quant[CARNE]));
+        result[LINGUICA].setText(String.format("%1$,.1f kg", quant[LINGUICA]));
+        result[CERVEJA].setText(String.format("%1$,.1f l", quant[CERVEJA]));
+        result[REFRI].setText(String.format("%1$,.1f l", quant[REFRI]));
     }
 
     private void criaBtnAjuda() {
