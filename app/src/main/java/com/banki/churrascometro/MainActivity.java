@@ -18,23 +18,10 @@ import android.widget.Toast;
 import static android.widget.Toast.LENGTH_LONG;
 
 public class MainActivity extends AppCompatActivity {
-    // tipos de convidados
-    public final int nTiposConvidados = 3;
-    public final int HOMENS = 0;
-    public final int MULHERES = 1;
-    public final int CRIANCAS = 2;
-
-    // tipos de ingredientes
-    public final int nTiposIngredientes = 4;
-    public final int CARNE = 0;
-    public final int LINGUICA = 1;
-    public final int CERVEJA = 2;
-    public final int REFRI = 3;
-
     // dados que precisam ser acessados nos listeners
-    private EditText[] edit = new EditText[nTiposConvidados];
-    private int[] nConvidados = new int[nTiposConvidados];
-    private CheckBox[] check = new CheckBox[nTiposIngredientes];
+    private EditText[] edit = new EditText[ConfigModel.nTiposConvidados];
+    private int[] nConvidados = new int[ConfigModel.nTiposConvidados];
+    private CheckBox[] check = new CheckBox[ConfigModel.nTiposIngredientes];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +33,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void InicializaControles() {
-        int[] idEdit = new int[nTiposConvidados];
-        idEdit[HOMENS] = R.id.editHomens;
-        idEdit[MULHERES] = R.id.editMulheres;
-        idEdit[CRIANCAS] = R.id.editCriancas;
+        int[] idEdit = new int[ConfigModel.nTiposConvidados];
+        idEdit[ConfigModel.HOMENS] = R.id.editHomens;
+        idEdit[ConfigModel.MULHERES] = R.id.editMulheres;
+        idEdit[ConfigModel.CRIANCAS] = R.id.editCriancas;
 
-        nConvidados[HOMENS] = 20;
-        nConvidados[MULHERES] = 15;
-        nConvidados[CRIANCAS] = 5;
+        nConvidados[ConfigModel.HOMENS] = 20;
+        nConvidados[ConfigModel.MULHERES] = 15;
+        nConvidados[ConfigModel.CRIANCAS] = 5;
 
-        for (int i = HOMENS; i <= CRIANCAS; i++) {
+        for (int i = ConfigModel.HOMENS; i <= ConfigModel.CRIANCAS; i++) {
             edit[i] = (EditText) findViewById(idEdit[i]);
             setIntValue(edit[i], nConvidados[i]);
         }
@@ -84,73 +71,73 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criaBtnMais() {
-        Button[] btnMais = new Button[nTiposConvidados];
+        Button[] btnMais = new Button[ConfigModel.nTiposConvidados];
 
-        btnMais[HOMENS] = (Button)findViewById(R.id.btnMaisHomens);
-        btnMais[MULHERES] = (Button)findViewById(R.id.btnMaisMulheres);
-        btnMais[CRIANCAS] = (Button)findViewById(R.id.btnMaisCriancas);
+        btnMais[ConfigModel.HOMENS] = (Button)findViewById(R.id.btnMaisHomens);
+        btnMais[ConfigModel.MULHERES] = (Button)findViewById(R.id.btnMaisMulheres);
+        btnMais[ConfigModel.CRIANCAS] = (Button)findViewById(R.id.btnMaisCriancas);
 
-        btnMais[HOMENS].setOnClickListener(new View.OnClickListener() {
+        btnMais[ConfigModel.HOMENS].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nConvidados[HOMENS] = getIntValue(edit[HOMENS]);
-                setIntValue(edit[HOMENS], ++nConvidados[HOMENS]);
+                nConvidados[ConfigModel.HOMENS] = getIntValue(edit[ConfigModel.HOMENS]);
+                setIntValue(edit[ConfigModel.HOMENS], ++nConvidados[ConfigModel.HOMENS]);
                 calcula();
             }
         });
-        btnMais[MULHERES].setOnClickListener(new View.OnClickListener() {
+        btnMais[ConfigModel.MULHERES].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nConvidados[MULHERES] = getIntValue(edit[MULHERES]);
-                setIntValue(edit[MULHERES], ++nConvidados[MULHERES]);
+                nConvidados[ConfigModel.MULHERES] = getIntValue(edit[ConfigModel.MULHERES]);
+                setIntValue(edit[ConfigModel.MULHERES], ++nConvidados[ConfigModel.MULHERES]);
                 calcula();
             }
         });
-        btnMais[CRIANCAS].setOnClickListener(new View.OnClickListener() {
+        btnMais[ConfigModel.CRIANCAS].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nConvidados[CRIANCAS] = getIntValue(edit[CRIANCAS]);
-                setIntValue(edit[CRIANCAS], ++nConvidados[CRIANCAS]);
+                nConvidados[ConfigModel.CRIANCAS] = getIntValue(edit[ConfigModel.CRIANCAS]);
+                setIntValue(edit[ConfigModel.CRIANCAS], ++nConvidados[ConfigModel.CRIANCAS]);
                 calcula();
             }
         });
     }
 
     private void criaBtnMenos() {
-        Button[] btnMenos = new Button[nTiposConvidados];
+        Button[] btnMenos = new Button[ConfigModel.nTiposConvidados];
 
-        btnMenos[HOMENS] = (Button)findViewById(R.id.btnMenosHomens);
-        btnMenos[MULHERES] = (Button)findViewById(R.id.btnMenosMulheres);
-        btnMenos[CRIANCAS] = (Button)findViewById(R.id.btnMenosCriancas);
+        btnMenos[ConfigModel.HOMENS] = (Button)findViewById(R.id.btnMenosHomens);
+        btnMenos[ConfigModel.MULHERES] = (Button)findViewById(R.id.btnMenosMulheres);
+        btnMenos[ConfigModel.CRIANCAS] = (Button)findViewById(R.id.btnMenosCriancas);
 
-        btnMenos[HOMENS].setOnClickListener(new View.OnClickListener() {
+        btnMenos[ConfigModel.HOMENS].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nConvidados[HOMENS] = getIntValue(edit[HOMENS]);
-                setIntValue(edit[HOMENS], --nConvidados[HOMENS]);
+                nConvidados[ConfigModel.HOMENS] = getIntValue(edit[ConfigModel.HOMENS]);
+                setIntValue(edit[ConfigModel.HOMENS], --nConvidados[ConfigModel.HOMENS]);
                 calcula();
             }
         });
-        btnMenos[MULHERES].setOnClickListener(new View.OnClickListener() {
+        btnMenos[ConfigModel.MULHERES].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nConvidados[MULHERES] = getIntValue(edit[MULHERES]);
-                setIntValue(edit[MULHERES], --nConvidados[MULHERES]);
+                nConvidados[ConfigModel.MULHERES] = getIntValue(edit[ConfigModel.MULHERES]);
+                setIntValue(edit[ConfigModel.MULHERES], --nConvidados[ConfigModel.MULHERES]);
                 calcula();
             }
         });
-        btnMenos[CRIANCAS].setOnClickListener(new View.OnClickListener() {
+        btnMenos[ConfigModel.CRIANCAS].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nConvidados[CRIANCAS] = getIntValue(edit[CRIANCAS]);
-                setIntValue(edit[CRIANCAS], --nConvidados[CRIANCAS]);
+                nConvidados[ConfigModel.CRIANCAS] = getIntValue(edit[ConfigModel.CRIANCAS]);
+                setIntValue(edit[ConfigModel.CRIANCAS], --nConvidados[ConfigModel.CRIANCAS]);
                 calcula();
             }
         });
     }
 
     private void criaEditListeners() {
-        edit[HOMENS].addTextChangedListener(new TextWatcher() {
+        edit[ConfigModel.HOMENS].addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -161,11 +148,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                nConvidados[HOMENS] = getIntValue(edit[HOMENS]);
+                nConvidados[ConfigModel.HOMENS] = getIntValue(edit[ConfigModel.HOMENS]);
                 calcula();
             }
         });
-        edit[MULHERES].addTextChangedListener(new TextWatcher() {
+        edit[ConfigModel.MULHERES].addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -176,11 +163,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                nConvidados[MULHERES] = getIntValue(edit[MULHERES]);
+                nConvidados[ConfigModel.MULHERES] = getIntValue(edit[ConfigModel.MULHERES]);
                 calcula();
             }
         });
-        edit[CRIANCAS].addTextChangedListener(new TextWatcher() {
+        edit[ConfigModel.CRIANCAS].addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -191,99 +178,99 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                nConvidados[CRIANCAS] = getIntValue(edit[CRIANCAS]);
+                nConvidados[ConfigModel.CRIANCAS] = getIntValue(edit[ConfigModel.CRIANCAS]);
                 calcula();
             }
         });
     }
 
     private void criaCheckListeners() {
-        check[CARNE] = (CheckBox)findViewById(R.id.checkCarne);
-        check[LINGUICA] = (CheckBox)findViewById(R.id.checkLinguica);
-        check[CERVEJA] = (CheckBox)findViewById(R.id.checkCerveja);
-        check[REFRI] = (CheckBox)findViewById(R.id.checkRefri);
+        check[ConfigModel.CARNE] = (CheckBox)findViewById(R.id.checkCarne);
+        check[ConfigModel.LINGUICA] = (CheckBox)findViewById(R.id.checkLinguica);
+        check[ConfigModel.CERVEJA] = (CheckBox)findViewById(R.id.checkCerveja);
+        check[ConfigModel.REFRI] = (CheckBox)findViewById(R.id.checkRefri);
 
-        check[CARNE].setOnClickListener(new View.OnClickListener() {
+        check[ConfigModel.CARNE].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check[LINGUICA].setEnabled(check[CARNE].isChecked());
+                check[ConfigModel.LINGUICA].setEnabled(check[ConfigModel.CARNE].isChecked());
                 calcula();
             }
         });
-        check[LINGUICA].setOnClickListener(new View.OnClickListener() {
+        check[ConfigModel.LINGUICA].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check[CARNE].setEnabled(check[LINGUICA].isChecked());
+                check[ConfigModel.CARNE].setEnabled(check[ConfigModel.LINGUICA].isChecked());
                 calcula();
             }
         });
-        check[CERVEJA].setOnClickListener(new View.OnClickListener() {
+        check[ConfigModel.CERVEJA].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check[REFRI].setEnabled(check[CERVEJA].isChecked());
+                check[ConfigModel.REFRI].setEnabled(check[ConfigModel.CERVEJA].isChecked());
                 calcula();
             }
         });
-        check[REFRI].setOnClickListener(new View.OnClickListener() {
+        check[ConfigModel.REFRI].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check[CERVEJA].setEnabled(check[REFRI].isChecked());
+                check[ConfigModel.CERVEJA].setEnabled(check[ConfigModel.REFRI].isChecked());
                 calcula();
             }
         });
     }
 
     private void calcula() {
-        TextView[] result = new TextView[nTiposIngredientes];
-        result[CARNE] = (TextView)findViewById(R.id.resultCarne);
-        result[LINGUICA] = (TextView)findViewById(R.id.resultLinguica);
-        result[CERVEJA] = (TextView)findViewById(R.id.resultCerveja);
-        result[REFRI] = (TextView)findViewById(R.id.resultRefri);
+        TextView[] result = new TextView[ConfigModel.nTiposIngredientes];
+        result[ConfigModel.CARNE] = (TextView)findViewById(R.id.resultCarne);
+        result[ConfigModel.LINGUICA] = (TextView)findViewById(R.id.resultLinguica);
+        result[ConfigModel.CERVEJA] = (TextView)findViewById(R.id.resultCerveja);
+        result[ConfigModel.REFRI] = (TextView)findViewById(R.id.resultRefri);
 
-        double[][] parametros = new double[nTiposConvidados][nTiposIngredientes];
-        parametros[HOMENS][CARNE] = 0.450;
-        parametros[MULHERES][CARNE] = 0.300;
-        parametros[CRIANCAS][CARNE] = 0.150;
-        parametros[HOMENS][LINGUICA] = 0.300;
-        parametros[MULHERES][LINGUICA] = 0.200;
-        parametros[CRIANCAS][LINGUICA] = 0.050;
-        parametros[HOMENS][CERVEJA] = 1.250;
-        parametros[MULHERES][CARNE] = 0.500;
-        parametros[CRIANCAS][CARNE] = 0;
-        parametros[HOMENS][REFRI] = 0.200;
-        parametros[MULHERES][REFRI] = 0.500;
-        parametros[CRIANCAS][REFRI] = 0.500;
+        double[][] parametros = new double[ConfigModel.nTiposConvidados][ConfigModel.nTiposIngredientes];
+        parametros[ConfigModel.HOMENS][ConfigModel.CARNE] = 0.450;
+        parametros[ConfigModel.MULHERES][ConfigModel.CARNE] = 0.300;
+        parametros[ConfigModel.CRIANCAS][ConfigModel.CARNE] = 0.150;
+        parametros[ConfigModel.HOMENS][ConfigModel.LINGUICA] = 0.300;
+        parametros[ConfigModel.MULHERES][ConfigModel.LINGUICA] = 0.200;
+        parametros[ConfigModel.CRIANCAS][ConfigModel.LINGUICA] = 0.050;
+        parametros[ConfigModel.HOMENS][ConfigModel.CERVEJA] = 1.250;
+        parametros[ConfigModel.MULHERES][ConfigModel.CARNE] = 0.500;
+        parametros[ConfigModel.CRIANCAS][ConfigModel.CARNE] = 0;
+        parametros[ConfigModel.HOMENS][ConfigModel.REFRI] = 0.200;
+        parametros[ConfigModel.MULHERES][ConfigModel.REFRI] = 0.500;
+        parametros[ConfigModel.CRIANCAS][ConfigModel.REFRI] = 0.500;
 
-        double[] quant = new double[nTiposIngredientes];
-        for (int i=CARNE; i<=REFRI;i++) {
+        double[] quant = new double[ConfigModel.nTiposIngredientes];
+        for (int i=ConfigModel.CARNE; i<=ConfigModel.REFRI;i++) {
             quant[i] = 0;
-            for (int j=HOMENS; j<=CRIANCAS; j++) {
+            for (int j=ConfigModel.HOMENS; j<=ConfigModel.CRIANCAS; j++) {
                 quant[i] += nConvidados[j] * parametros[j][i];
             }
         }
 
-        if (!check[CARNE].isChecked()) {
-            quant[LINGUICA] += quant[CARNE];
-            quant[CARNE] = 0;
+        if (!check[ConfigModel.CARNE].isChecked()) {
+            quant[ConfigModel.LINGUICA] += quant[ConfigModel.CARNE];
+            quant[ConfigModel.CARNE] = 0;
         }
-        else if (!check[LINGUICA].isChecked()) {
-            quant[CARNE] += quant[LINGUICA];
-            quant[LINGUICA] = 0;
-        }
-
-        if (!check[CERVEJA].isChecked()) {
-            quant[REFRI] += quant[CERVEJA];
-            quant[CERVEJA] = 0;
-        }
-        else if (!check[REFRI].isChecked()) {
-            quant[CERVEJA] += quant[REFRI];
-            quant[REFRI] = 0;
+        else if (!check[ConfigModel.LINGUICA].isChecked()) {
+            quant[ConfigModel.CARNE] += quant[ConfigModel.LINGUICA];
+            quant[ConfigModel.LINGUICA] = 0;
         }
 
-        result[CARNE].setText(String.format("%1$,.1f kg",quant[CARNE]));
-        result[LINGUICA].setText(String.format("%1$,.1f kg", quant[LINGUICA]));
-        result[CERVEJA].setText(String.format("%1$,.1f l", quant[CERVEJA]));
-        result[REFRI].setText(String.format("%1$,.1f l", quant[REFRI]));
+        if (!check[ConfigModel.CERVEJA].isChecked()) {
+            quant[ConfigModel.REFRI] += quant[ConfigModel.CERVEJA];
+            quant[ConfigModel.CERVEJA] = 0;
+        }
+        else if (!check[ConfigModel.REFRI].isChecked()) {
+            quant[ConfigModel.CERVEJA] += quant[ConfigModel.REFRI];
+            quant[ConfigModel.REFRI] = 0;
+        }
+
+        result[ConfigModel.CARNE].setText(String.format("%1$,.1f kg",quant[ConfigModel.CARNE]));
+        result[ConfigModel.LINGUICA].setText(String.format("%1$,.1f kg", quant[ConfigModel.LINGUICA]));
+        result[ConfigModel.CERVEJA].setText(String.format("%1$,.1f l", quant[ConfigModel.CERVEJA]));
+        result[ConfigModel.REFRI].setText(String.format("%1$,.1f l", quant[ConfigModel.REFRI]));
     }
 
     private void criaBtnAjuda() {
