@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText[] edit = new EditText[3];
     private int[] idEdit = new int[3];
     private int[] nConvidados = new int[3];
+
+    CheckBox checkCarne, checkLinguica, checkCerveja, checkRefri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         criaBtnMais();
         criaBtnMenos();
         criaEditListeners();
+        criaCheckListeners();
+        calcula();
     }
 
     private int getIntValue(EditText edit) {
@@ -114,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 nConvidados[HOMENS] = getIntValue(edit[HOMENS]);
-                setIntValue(edit[HOMENS],--nConvidados[HOMENS]);
+                setIntValue(edit[HOMENS], --nConvidados[HOMENS]);
                 calcula();
             }
         });
@@ -122,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 nConvidados[MULHERES] = getIntValue(edit[MULHERES]);
-                setIntValue(edit[MULHERES],--nConvidados[MULHERES]);
+                setIntValue(edit[MULHERES], --nConvidados[MULHERES]);
                 calcula();
             }
         });
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 nConvidados[CRIANCAS] = getIntValue(edit[CRIANCAS]);
-                setIntValue(edit[CRIANCAS],--nConvidados[CRIANCAS]);
+                setIntValue(edit[CRIANCAS], --nConvidados[CRIANCAS]);
                 calcula();
             }
         });
@@ -139,9 +144,13 @@ public class MainActivity extends AppCompatActivity {
     private void criaEditListeners() {
         edit[HOMENS].addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 nConvidados[HOMENS] = getIntValue(edit[HOMENS]);
@@ -180,14 +189,80 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void criaCheckListeners() {
+        checkCarne = (CheckBox)findViewById(R.id.checkCarne);
+        checkLinguica = (CheckBox)findViewById(R.id.checkLinguica);
+        checkCerveja = (CheckBox)findViewById(R.id.checkCerveja);
+        checkRefri = (CheckBox)findViewById(R.id.checkRefri);
+
+        checkCarne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkLinguica.setEnabled(checkCarne.isChecked());
+                calcula();
+            }
+        });
+        checkLinguica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkCarne.setEnabled(checkLinguica.isChecked());
+                calcula();
+            }
+        });
+        checkCerveja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkRefri.setEnabled(checkCerveja.isChecked());
+                calcula();
+            }
+        });
+        checkRefri.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkCerveja.setEnabled(checkRefri.isChecked());
+                calcula();
+            }
+        });
+    }
+
     private void calcula() {
-        String mensagem = "Cálculos atualizados com " + nConvidados[HOMENS] + " homens, " +
-                           nConvidados[MULHERES] + " mulheres e " + nConvidados[CRIANCAS] + " crianças";
-        Toast t = Toast.makeText(
-                MainActivity.this,
-                mensagem,
-                Toast.LENGTH_SHORT);
-        t.show();
+        TextView resultCarne = (TextView)findViewById(R.id.resultCarne);
+        TextView resultLinguica = (TextView)findViewById(R.id.resultLinguica);
+        TextView resultCerveja = (TextView)findViewById(R.id.resultCerveja);
+        TextView resultRefri = (TextView)findViewById(R.id.resultRefri);
+
+        double quantCarne = 0.450 * nConvidados[HOMENS] + 0.300 * nConvidados[MULHERES] + 0.150 * nConvidados[CRIANCAS];
+        double quantLinguica = 0.200 * nConvidados[HOMENS] + 0.200 * nConvidados[MULHERES] + 0.050 * nConvidados[CRIANCAS];
+        double quantCerveja = 1.250 * nConvidados[HOMENS] + 0.500 * nConvidados[MULHERES];
+        double quantRefri = 0.200 * nConvidados[HOMENS] + 0.500 * nConvidados[MULHERES] + 0.500 * nConvidados[CRIANCAS];
+
+        CheckBox checkCarne = (CheckBox)findViewById(R.id.checkCarne);
+        CheckBox checkLinguica = (CheckBox)findViewById(R.id.checkLinguica);
+        CheckBox checkCerveja = (CheckBox)findViewById(R.id.checkCerveja);
+        CheckBox checkRefri = (CheckBox)findViewById(R.id.checkRefri);
+
+        if (!checkCarne.isChecked()) {
+            quantLinguica += quantCarne;
+            quantCarne = 0;
+        }
+        else if (!checkLinguica.isChecked()) {
+            quantCarne += quantLinguica;
+            quantLinguica = 0;
+        }
+
+        if (!checkCerveja.isChecked()) {
+            quantRefri += quantCerveja;
+            quantCerveja = 0;
+        }
+        else if (!checkRefri.isChecked()) {
+            quantCerveja += quantRefri;
+            quantRefri = 0;
+        }
+
+        resultCarne.setText(String.format("%1$,.1f kg",quantCarne));
+        resultLinguica.setText(String.format("%1$,.1f kg",quantLinguica));
+        resultCerveja.setText(String.format("%1$,.1f l",quantCerveja));
+        resultRefri.setText(String.format("%1$,.1f l",quantRefri));
     }
 
     private void criaBtnAjuda() {

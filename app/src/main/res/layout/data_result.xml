@@ -20,8 +20,10 @@
         android:layout_height="wrap_content"
         android:stretchColumns="0">
         <TableRow>
-            <CheckBox style="@style/texto"
+            <CheckBox style="@style/CheckBox"
                 android:id="@+id/checkCarne"
+                android:scaleX="1.50"
+                android:scaleY="1.50"
                 android:text="Carne:"
                 android:checked="true" />
 
@@ -30,7 +32,7 @@
                 android:text="5,0 kg" />
         </TableRow>
         <TableRow>
-            <CheckBox style="@style/texto"
+            <CheckBox style="@style/CheckBox"
                 android:id="@+id/checkLinguica"
                 android:text="Linguiça:"
                 android:checked="true" />
@@ -40,7 +42,7 @@
                 android:text="2,5 kg" />
         </TableRow>
         <TableRow>
-            <CheckBox style="@style/texto"
+            <CheckBox style="@style/CheckBox"
                 android:id="@+id/checkCerveja"
                 android:text="Cerveja:"
                 android:checked="true" />
@@ -51,7 +53,7 @@
                 />
         </TableRow>
         <TableRow>
-            <CheckBox style="@style/texto"
+            <CheckBox style="@style/CheckBox"
                 android:id="@+id/checkRefri"
                 android:text="Refrigerante:"
                 android:checked="true" />

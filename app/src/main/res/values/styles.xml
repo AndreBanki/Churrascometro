@@ -32,4 +32,7 @@
     <style name="MinusButton" parent="SimpleButton">
         <item name="android:text">-</item>
     </style>
+    <style name="CheckBox" parent="texto">
+        <item name="android:button">@drawable/abc_btn_check_material</item>
+    </style>
 </resources>
