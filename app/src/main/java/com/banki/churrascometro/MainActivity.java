@@ -240,11 +240,27 @@ public class MainActivity extends AppCompatActivity {
         result[CERVEJA] = (TextView)findViewById(R.id.resultCerveja);
         result[REFRI] = (TextView)findViewById(R.id.resultRefri);
 
+        double[][] parametros = new double[nTiposConvidados][nTiposIngredientes];
+        parametros[HOMENS][CARNE] = 0.450;
+        parametros[MULHERES][CARNE] = 0.300;
+        parametros[CRIANCAS][CARNE] = 0.150;
+        parametros[HOMENS][LINGUICA] = 0.300;
+        parametros[MULHERES][LINGUICA] = 0.200;
+        parametros[CRIANCAS][LINGUICA] = 0.050;
+        parametros[HOMENS][CERVEJA] = 1.250;
+        parametros[MULHERES][CARNE] = 0.500;
+        parametros[CRIANCAS][CARNE] = 0;
+        parametros[HOMENS][REFRI] = 0.200;
+        parametros[MULHERES][REFRI] = 0.500;
+        parametros[CRIANCAS][REFRI] = 0.500;
+
         double[] quant = new double[nTiposIngredientes];
-        quant[CARNE] = 0.450 * nConvidados[HOMENS] + 0.300 * nConvidados[MULHERES] + 0.150 * nConvidados[CRIANCAS];
-        quant[LINGUICA] = 0.200 * nConvidados[HOMENS] + 0.200 * nConvidados[MULHERES] + 0.050 * nConvidados[CRIANCAS];
-        quant[CERVEJA] = 1.250 * nConvidados[HOMENS] + 0.500 * nConvidados[MULHERES];
-        quant[REFRI] = 0.200 * nConvidados[HOMENS] + 0.500 * nConvidados[MULHERES] + 0.500 * nConvidados[CRIANCAS];
+        for (int i=CARNE; i<=REFRI;i++) {
+            quant[i] = 0;
+            for (int j=HOMENS; j<=CRIANCAS; j++) {
+                quant[i] += nConvidados[j] * parametros[j][i];
+            }
+        }
 
         if (!check[CARNE].isChecked()) {
             quant[LINGUICA] += quant[CARNE];
