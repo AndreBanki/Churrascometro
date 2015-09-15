@@ -12,42 +12,51 @@
         <TextView style="@style/texto"
             android:text="Homens:" />
 
-        <Button style="@style/MinusButton"
+        <com.banki.churrascometro.DecrementButton
+            style="@style/MinusButton"
             android:id="@+id/btnMenosHomens" />
 
-        <EditText style="@style/editNumeroLargFixa"
+        <com.banki.churrascometro.EditInteger
+            style="@style/editNumeroLargFixa"
             android:id="@+id/editHomens"
             android:text="10" />
 
-        <Button style="@style/PlusButton"
+        <com.banki.churrascometro.IncrementButton
+            style="@style/PlusButton"
             android:id="@+id/btnMaisHomens" />
     </TableRow>
     <TableRow>
         <TextView style="@style/texto"
             android:text="Mulheres:" />
 
-        <Button style="@style/MinusButton"
+        <com.banki.churrascometro.DecrementButton
+            style="@style/MinusButton"
             android:id="@+id/btnMenosMulheres" />
 
-        <EditText style="@style/editNumeroLargFixa"
+        <com.banki.churrascometro.EditInteger
+            style="@style/editNumeroLargFixa"
             android:id="@+id/editMulheres"
             android:text="10" />
 
-        <Button style="@style/PlusButton"
+        <com.banki.churrascometro.IncrementButton
+            style="@style/PlusButton"
             android:id="@+id/btnMaisMulheres" />
     </TableRow>
     <TableRow>
         <TextView style="@style/texto"
             android:text="Crianças:" />
 
-        <Button style="@style/MinusButton"
+        <com.banki.churrascometro.DecrementButton
+            style="@style/MinusButton"
             android:id="@+id/btnMenosCriancas" />
 
-        <EditText style="@style/editNumeroLargFixa"
+        <com.banki.churrascometro.EditInteger
+            style="@style/editNumeroLargFixa"
             android:id="@+id/editCriancas"
             android:text="5" />
 
-        <Button style="@style/PlusButton"
+        <com.banki.churrascometro.IncrementButton
+            style="@style/PlusButton"
             android:id="@+id/btnMaisCriancas" />
     </TableRow>
 </TableLayout>

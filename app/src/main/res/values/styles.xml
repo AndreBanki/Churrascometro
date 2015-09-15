@@ -20,7 +20,7 @@
         <item name="android:inputType">number</item>
     </style>
     <style name="editNumeroLargFixa" parent="editNumero">
-        <item name="android:width">35dp</item>
+        <item name="android:width">45dp</item>
     </style>
     <style name="SimpleButton" parent="@style/Widget.AppCompat.Button.Small">
         <item name="android:layout_width">wrap_content</item>

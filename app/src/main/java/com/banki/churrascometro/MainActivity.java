@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     ConfigModel config;
 
     // dados que precisam ser acessados nos listeners
-    private EditText[] edit = new EditText[ConfigModel.nTiposConvidados];
+    private EditInteger[] edit = new EditInteger[ConfigModel.nTiposConvidados];
     private int[] nConvidados = new int[ConfigModel.nTiposConvidados];
     private CheckBox[] check = new CheckBox[ConfigModel.nTiposIngredientes];
 
@@ -48,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         nConvidados[ConfigModel.CRIANCAS] = 5;
 
         for (int i = ConfigModel.HOMENS; i <= ConfigModel.CRIANCAS; i++) {
-            edit[i] = (EditText) findViewById(idEdit[i]);
-            setIntValue(edit[i], nConvidados[i]);
+            edit[i] = (EditInteger) findViewById(idEdit[i]);
+            edit[i].setIntValue(nConvidados[i]);
         }
         criaBtnMais();
         criaBtnMenos();
@@ -58,87 +57,25 @@ public class MainActivity extends AppCompatActivity {
         calcula();
     }
 
-    private int getIntValue(EditText edit) {
-        int value = 0;
-        try {
-            value = Integer.parseInt(edit.getText().toString());
-        }
-        catch (NumberFormatException e) {
-            Log.e("Churrascômetro", Log.getStackTraceString(e));
-        }
-        return value;
-    }
-
-    private void setIntValue(EditText edit, int value) {
-        if (value < 0)
-            value = 0;
-        edit.setText(String.valueOf(value));
-    }
-
     private void criaBtnMais() {
-        Button[] btnMais = new Button[ConfigModel.nTiposConvidados];
+        IncrementButton[] btnMais = new IncrementButton[ConfigModel.nTiposConvidados];
+        btnMais[ConfigModel.HOMENS] = (IncrementButton)findViewById(R.id.btnMaisHomens);
+        btnMais[ConfigModel.MULHERES] = (IncrementButton)findViewById(R.id.btnMaisMulheres);
+        btnMais[ConfigModel.CRIANCAS] = (IncrementButton)findViewById(R.id.btnMaisCriancas);
 
-        btnMais[ConfigModel.HOMENS] = (Button)findViewById(R.id.btnMaisHomens);
-        btnMais[ConfigModel.MULHERES] = (Button)findViewById(R.id.btnMaisMulheres);
-        btnMais[ConfigModel.CRIANCAS] = (Button)findViewById(R.id.btnMaisCriancas);
-
-        btnMais[ConfigModel.HOMENS].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nConvidados[ConfigModel.HOMENS] = getIntValue(edit[ConfigModel.HOMENS]);
-                setIntValue(edit[ConfigModel.HOMENS], ++nConvidados[ConfigModel.HOMENS]);
-                calcula();
-            }
-        });
-        btnMais[ConfigModel.MULHERES].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nConvidados[ConfigModel.MULHERES] = getIntValue(edit[ConfigModel.MULHERES]);
-                setIntValue(edit[ConfigModel.MULHERES], ++nConvidados[ConfigModel.MULHERES]);
-                calcula();
-            }
-        });
-        btnMais[ConfigModel.CRIANCAS].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nConvidados[ConfigModel.CRIANCAS] = getIntValue(edit[ConfigModel.CRIANCAS]);
-                setIntValue(edit[ConfigModel.CRIANCAS], ++nConvidados[ConfigModel.CRIANCAS]);
-                calcula();
-            }
-        });
+        for (int i=ConfigModel.HOMENS; i<=ConfigModel.CRIANCAS; i++)
+            btnMais[i].setAssociatedEdit(edit[i]);
     }
 
     private void criaBtnMenos() {
-        Button[] btnMenos = new Button[ConfigModel.nTiposConvidados];
+        DecrementButton[] btnMenos = new DecrementButton[ConfigModel.nTiposConvidados];
 
-        btnMenos[ConfigModel.HOMENS] = (Button)findViewById(R.id.btnMenosHomens);
-        btnMenos[ConfigModel.MULHERES] = (Button)findViewById(R.id.btnMenosMulheres);
-        btnMenos[ConfigModel.CRIANCAS] = (Button)findViewById(R.id.btnMenosCriancas);
+        btnMenos[ConfigModel.HOMENS] = (DecrementButton)findViewById(R.id.btnMenosHomens);
+        btnMenos[ConfigModel.MULHERES] = (DecrementButton)findViewById(R.id.btnMenosMulheres);
+        btnMenos[ConfigModel.CRIANCAS] = (DecrementButton)findViewById(R.id.btnMenosCriancas);
 
-        btnMenos[ConfigModel.HOMENS].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nConvidados[ConfigModel.HOMENS] = getIntValue(edit[ConfigModel.HOMENS]);
-                setIntValue(edit[ConfigModel.HOMENS], --nConvidados[ConfigModel.HOMENS]);
-                calcula();
-            }
-        });
-        btnMenos[ConfigModel.MULHERES].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nConvidados[ConfigModel.MULHERES] = getIntValue(edit[ConfigModel.MULHERES]);
-                setIntValue(edit[ConfigModel.MULHERES], --nConvidados[ConfigModel.MULHERES]);
-                calcula();
-            }
-        });
-        btnMenos[ConfigModel.CRIANCAS].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nConvidados[ConfigModel.CRIANCAS] = getIntValue(edit[ConfigModel.CRIANCAS]);
-                setIntValue(edit[ConfigModel.CRIANCAS], --nConvidados[ConfigModel.CRIANCAS]);
-                calcula();
-            }
-        });
+        for (int i=ConfigModel.HOMENS; i<=ConfigModel.CRIANCAS; i++)
+            btnMenos[i].setAssociatedEdit(edit[i]);
     }
 
     private void criaEditListeners() {
@@ -153,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                nConvidados[ConfigModel.HOMENS] = getIntValue(edit[ConfigModel.HOMENS]);
+                nConvidados[ConfigModel.HOMENS] = edit[ConfigModel.HOMENS].getIntValue();
                 calcula();
             }
         });
@@ -168,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                nConvidados[ConfigModel.MULHERES] = getIntValue(edit[ConfigModel.MULHERES]);
+                nConvidados[ConfigModel.MULHERES] = edit[ConfigModel.MULHERES].getIntValue();
                 calcula();
             }
         });
@@ -183,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                nConvidados[ConfigModel.CRIANCAS] = getIntValue(edit[ConfigModel.CRIANCAS]);
+                nConvidados[ConfigModel.CRIANCAS] = edit[ConfigModel.CRIANCAS].getIntValue();
                 calcula();
             }
         });
