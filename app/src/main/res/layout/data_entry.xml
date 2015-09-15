@@ -12,16 +12,16 @@
         <TextView style="@style/texto"
             android:text="Homens:" />
 
-        <com.banki.churrascometro.DecrementButton
+        <com.banki.utils.DecrementButton
             style="@style/MinusButton"
             android:id="@+id/btnMenosHomens" />
 
-        <com.banki.churrascometro.EditInteger
+        <com.banki.utils.EditInteger
             style="@style/editNumeroLargFixa"
             android:id="@+id/editHomens"
             android:text="10" />
 
-        <com.banki.churrascometro.IncrementButton
+        <com.banki.utils.IncrementButton
             style="@style/PlusButton"
             android:id="@+id/btnMaisHomens" />
     </TableRow>
@@ -29,16 +29,16 @@
         <TextView style="@style/texto"
             android:text="Mulheres:" />
 
-        <com.banki.churrascometro.DecrementButton
+        <com.banki.utils.DecrementButton
             style="@style/MinusButton"
             android:id="@+id/btnMenosMulheres" />
 
-        <com.banki.churrascometro.EditInteger
+        <com.banki.utils.EditInteger
             style="@style/editNumeroLargFixa"
             android:id="@+id/editMulheres"
             android:text="10" />
 
-        <com.banki.churrascometro.IncrementButton
+        <com.banki.utils.IncrementButton
             style="@style/PlusButton"
             android:id="@+id/btnMaisMulheres" />
     </TableRow>
@@ -46,16 +46,16 @@
         <TextView style="@style/texto"
             android:text="Crianças:" />
 
-        <com.banki.churrascometro.DecrementButton
+        <com.banki.utils.DecrementButton
             style="@style/MinusButton"
             android:id="@+id/btnMenosCriancas" />
 
-        <com.banki.churrascometro.EditInteger
+        <com.banki.utils.EditInteger
             style="@style/editNumeroLargFixa"
             android:id="@+id/editCriancas"
             android:text="5" />
 
-        <com.banki.churrascometro.IncrementButton
+        <com.banki.utils.IncrementButton
             style="@style/PlusButton"
             android:id="@+id/btnMaisCriancas" />
     </TableRow>

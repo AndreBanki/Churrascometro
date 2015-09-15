@@ -1,9 +1,11 @@
-package com.banki.churrascometro;
+package com.banki.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class DecrementButton extends IncrementButton{
+import com.banki.utils.IncrementButton;
+
+public class DecrementButton extends IncrementButton {
     public DecrementButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

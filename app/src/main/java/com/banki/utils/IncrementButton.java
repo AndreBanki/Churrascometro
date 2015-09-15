@@ -1,10 +1,11 @@
-package com.banki.churrascometro;
+package com.banki.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+
+import com.banki.utils.EditInteger;
 
 public class IncrementButton extends Button {
 

@@ -1,4 +1,4 @@
-package com.banki.churrascometro;
+package com.banki.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

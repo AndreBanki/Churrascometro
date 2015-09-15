@@ -5,15 +5,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.banki.utils.DecrementButton;
+import com.banki.utils.EditInteger;
+import com.banki.utils.IncrementButton;
+
 import static android.widget.Toast.LENGTH_LONG;
 
 public class MainActivity extends AppCompatActivity {
