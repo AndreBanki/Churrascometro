@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Churrasco churrasco = new Churrasco();
 
-    // dados que precisam ser acessados nos listeners
+    // dados que precisam ser acessados no AtualizaResultados
     private EditInteger[] edit = new EditInteger[Churrasco.nTiposConvidados];
     private int[] nConvidados = new int[Churrasco.nTiposConvidados];
     private CheckBox[] check = new CheckBox[Churrasco.nTiposIngredientes];
@@ -51,15 +51,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criaEdits() {
-        int[] idEdit = new int[Churrasco.nTiposConvidados];
-        idEdit[Churrasco.HOMENS] = R.id.editHomens;
-        idEdit[Churrasco.MULHERES] = R.id.editMulheres;
-        idEdit[Churrasco.CRIANCAS] = R.id.editCriancas;
+        edit[Churrasco.HOMENS] = (EditInteger) findViewById(R.id.editHomens);
+        edit[Churrasco.MULHERES] = (EditInteger) findViewById(R.id.editMulheres);
+        edit[Churrasco.CRIANCAS] = (EditInteger) findViewById(R.id.editCriancas);
 
-        for (int i = Churrasco.HOMENS; i <= Churrasco.CRIANCAS; i++) {
-            edit[i] = (EditInteger) findViewById(idEdit[i]);
+        for (int i = Churrasco.HOMENS; i <= Churrasco.CRIANCAS; i++)
             edit[i].setIntValue(nConvidados[i]);
-        }
     }
 
     private void criaBtnMais() {
@@ -84,51 +81,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criaEditListeners() {
-        edit[Churrasco.HOMENS].addTextChangedListener(new TextWatcher() {
+        TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-                nConvidados[Churrasco.HOMENS] = edit[Churrasco.HOMENS].getIntValue();
                 atualizaResultado();
             }
-        });
-        edit[Churrasco.MULHERES].addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        };
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                nConvidados[Churrasco.MULHERES] = edit[Churrasco.MULHERES].getIntValue();
-                atualizaResultado();
-            }
-        });
-        edit[Churrasco.CRIANCAS].addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                nConvidados[Churrasco.CRIANCAS] = edit[Churrasco.CRIANCAS].getIntValue();
-                atualizaResultado();
-            }
-        });
+        for (int i= Churrasco.HOMENS; i<= Churrasco.CRIANCAS; i++)
+            edit[i].addTextChangedListener(textWatcher);
     }
 
     private void criaCheckListeners() {
@@ -137,39 +104,30 @@ public class MainActivity extends AppCompatActivity {
         check[Churrasco.CERVEJA] = (CheckBox)findViewById(R.id.checkCerveja);
         check[Churrasco.REFRI] = (CheckBox)findViewById(R.id.checkRefri);
 
-        check[Churrasco.CARNE].setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check[Churrasco.LINGUICA].setEnabled(check[Churrasco.CARNE].isChecked());
-                atualizaResultado();
+                atualizaChecks();
             }
-        });
-        check[Churrasco.LINGUICA].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                check[Churrasco.CARNE].setEnabled(check[Churrasco.LINGUICA].isChecked());
-                atualizaResultado();
-            }
-        });
-        check[Churrasco.CERVEJA].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                check[Churrasco.REFRI].setEnabled(check[Churrasco.CERVEJA].isChecked());
-                atualizaResultado();
-            }
-        });
-        check[Churrasco.REFRI].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                check[Churrasco.CERVEJA].setEnabled(check[Churrasco.REFRI].isChecked());
-                atualizaResultado();
-            }
-        });
+        };
+
+        for (int i=Churrasco.CARNE; i<=Churrasco.REFRI; i++)
+            check[i].setOnClickListener(clickListener);
+    }
+
+    private void atualizaChecks() {
+        check[Churrasco.LINGUICA].setEnabled(check[Churrasco.CARNE].isChecked());
+        check[Churrasco.CARNE].setEnabled(check[Churrasco.LINGUICA].isChecked());
+        check[Churrasco.REFRI].setEnabled(check[Churrasco.CERVEJA].isChecked());
+        check[Churrasco.CERVEJA].setEnabled(check[Churrasco.REFRI].isChecked());
+        atualizaResultado();
     }
 
     private void atualizaResultado() {
-        for (int i=Churrasco.HOMENS; i<=Churrasco.CRIANCAS; i++)
+        for (int i=Churrasco.HOMENS; i<=Churrasco.CRIANCAS; i++) {
+            nConvidados[i] = edit[i].getIntValue();
             churrasco.setNumeroConvidados(i, nConvidados[i]);
+        }
 
         for (int j=Churrasco.CARNE; j<=Churrasco.REFRI; j++)
             churrasco.setIngredienteCheck(j, check[j].isChecked());
