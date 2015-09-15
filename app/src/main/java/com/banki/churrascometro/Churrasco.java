@@ -27,6 +27,10 @@ public class Churrasco implements Serializable {
     int[] numeroConvidados = new int[nTiposConvidados];
 
     public Churrasco() {
+        numeroConvidados[HOMENS] = 20;
+        numeroConvidados[MULHERES] = 15;
+        numeroConvidados[CRIANCAS] = 5;
+
         parametros[HOMENS][CARNE] = 0.450;
         parametros[MULHERES][CARNE] = 0.300;
         parametros[CRIANCAS][CARNE] = 0.150;
@@ -47,6 +51,10 @@ public class Churrasco implements Serializable {
 
     public void setNumeroConvidados(int tipo, int value) {
         numeroConvidados[tipo] = value;
+    }
+
+    public int getNumeroConvidados(int tipo) {
+        return numeroConvidados[tipo];
     }
 
     private double consumo(int ingrediente) {
@@ -79,7 +87,7 @@ public class Churrasco implements Serializable {
         return quant;
     }
 
-    public String consumoAsString(int ingrediente) {
+    public String getConsumoAsString(int ingrediente) {
         if (ingrediente == CARNE || ingrediente == LINGUICA)
             return String.format("%1$,.1f kg", consumoCorrigido(ingrediente));
         else

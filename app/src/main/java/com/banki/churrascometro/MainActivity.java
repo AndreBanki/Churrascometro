@@ -22,32 +22,26 @@ import static android.widget.Toast.LENGTH_LONG;
 public class MainActivity extends AppCompatActivity {
 
     private Churrasco churrasco = new Churrasco();
-
-    // dados que precisam ser acessados no AtualizaResultados
     private EditInteger[] edit = new EditInteger[Churrasco.nTiposConvidados];
-    private int[] nConvidados = new int[Churrasco.nTiposConvidados];
     private CheckBox[] check = new CheckBox[Churrasco.nTiposIngredientes];
+    private TextView[] result = new TextView[Churrasco.nTiposIngredientes];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nConvidados[Churrasco.HOMENS] = 20;
-        nConvidados[Churrasco.MULHERES] = 15;
-        nConvidados[Churrasco.CRIANCAS] = 5;
-
-        InicializaControles();
+        inicializaControles();
+        atualizaResultado();
         criaBtnAjuda();
     }
 
-    private void InicializaControles() {
+    private void inicializaControles() {
         criaEdits();
         criaBtnMais();
         criaBtnMenos();
-        criaEditListeners();
-        criaCheckListeners();
-        atualizaResultado();
+        criaCheckBoxes();
+        criaResultEdits();
     }
 
     private void criaEdits() {
@@ -55,8 +49,23 @@ public class MainActivity extends AppCompatActivity {
         edit[Churrasco.MULHERES] = (EditInteger) findViewById(R.id.editMulheres);
         edit[Churrasco.CRIANCAS] = (EditInteger) findViewById(R.id.editCriancas);
 
-        for (int i = Churrasco.HOMENS; i <= Churrasco.CRIANCAS; i++)
-            edit[i].setIntValue(nConvidados[i]);
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                atualizaResultado();
+            }
+        };
+
+        for (int i= Churrasco.HOMENS; i<= Churrasco.CRIANCAS; i++) {
+            edit[i].setIntValue(churrasco.getNumeroConvidados(i));
+            edit[i].addTextChangedListener(textWatcher);
+        }
     }
 
     private void criaBtnMais() {
@@ -80,25 +89,7 @@ public class MainActivity extends AppCompatActivity {
             btnMenos[i].setAssociatedEdit(edit[i]);
     }
 
-    private void criaEditListeners() {
-        TextWatcher textWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
-                atualizaResultado();
-            }
-        };
-
-        for (int i= Churrasco.HOMENS; i<= Churrasco.CRIANCAS; i++)
-            edit[i].addTextChangedListener(textWatcher);
-    }
-
-    private void criaCheckListeners() {
+    private void criaCheckBoxes() {
         check[Churrasco.CARNE] = (CheckBox)findViewById(R.id.checkCarne);
         check[Churrasco.LINGUICA] = (CheckBox)findViewById(R.id.checkLinguica);
         check[Churrasco.CERVEJA] = (CheckBox)findViewById(R.id.checkCerveja);
@@ -115,6 +106,14 @@ public class MainActivity extends AppCompatActivity {
             check[i].setOnClickListener(clickListener);
     }
 
+    private void criaResultEdits() {
+        result = new TextView[Churrasco.nTiposIngredientes];
+        result[Churrasco.CARNE] = (TextView)findViewById(R.id.resultCarne);
+        result[Churrasco.LINGUICA] = (TextView)findViewById(R.id.resultLinguica);
+        result[Churrasco.CERVEJA] = (TextView)findViewById(R.id.resultCerveja);
+        result[Churrasco.REFRI] = (TextView)findViewById(R.id.resultRefri);
+    }
+
     private void atualizaChecks() {
         check[Churrasco.LINGUICA].setEnabled(check[Churrasco.CARNE].isChecked());
         check[Churrasco.CARNE].setEnabled(check[Churrasco.LINGUICA].isChecked());
@@ -124,24 +123,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void atualizaResultado() {
-        for (int i=Churrasco.HOMENS; i<=Churrasco.CRIANCAS; i++) {
-            nConvidados[i] = edit[i].getIntValue();
-            churrasco.setNumeroConvidados(i, nConvidados[i]);
-        }
+        // obtem dados da interface
+        for (int i=Churrasco.HOMENS; i<=Churrasco.CRIANCAS; i++)
+            churrasco.setNumeroConvidados(i, edit[i].getIntValue());
 
         for (int j=Churrasco.CARNE; j<=Churrasco.REFRI; j++)
             churrasco.setIngredienteCheck(j, check[j].isChecked());
 
-        TextView[] result = new TextView[Churrasco.nTiposIngredientes];
-        result[Churrasco.CARNE] = (TextView)findViewById(R.id.resultCarne);
-        result[Churrasco.LINGUICA] = (TextView)findViewById(R.id.resultLinguica);
-        result[Churrasco.CERVEJA] = (TextView)findViewById(R.id.resultCerveja);
-        result[Churrasco.REFRI] = (TextView)findViewById(R.id.resultRefri);
-
-        result[Churrasco.CARNE].setText(churrasco.consumoAsString(Churrasco.CARNE));
-        result[Churrasco.LINGUICA].setText(churrasco.consumoAsString(Churrasco.LINGUICA));
-        result[Churrasco.CERVEJA].setText(churrasco.consumoAsString(Churrasco.CERVEJA));
-        result[Churrasco.REFRI].setText(churrasco.consumoAsString(Churrasco.REFRI));
+        // preenche com os resultados calculados
+        for (int j=Churrasco.CARNE; j<=Churrasco.REFRI; j++)
+            result[j].setText(churrasco.getConsumoAsString(j));
     }
 
     private void criaBtnAjuda() {
