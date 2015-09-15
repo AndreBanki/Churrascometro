@@ -21,68 +21,70 @@ import static android.widget.Toast.LENGTH_LONG;
 
 public class MainActivity extends AppCompatActivity {
 
-    ConfigModel config;
+    private Churrasco churrasco = new Churrasco();
 
     // dados que precisam ser acessados nos listeners
-    private EditInteger[] edit = new EditInteger[ConfigModel.nTiposConvidados];
-    private int[] nConvidados = new int[ConfigModel.nTiposConvidados];
-    private CheckBox[] check = new CheckBox[ConfigModel.nTiposIngredientes];
+    private EditInteger[] edit = new EditInteger[Churrasco.nTiposConvidados];
+    private int[] nConvidados = new int[Churrasco.nTiposConvidados];
+    private CheckBox[] check = new CheckBox[Churrasco.nTiposIngredientes];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        config = new ConfigModel();
+        nConvidados[Churrasco.HOMENS] = 20;
+        nConvidados[Churrasco.MULHERES] = 15;
+        nConvidados[Churrasco.CRIANCAS] = 5;
 
         InicializaControles();
         criaBtnAjuda();
     }
 
     private void InicializaControles() {
-        int[] idEdit = new int[ConfigModel.nTiposConvidados];
-        idEdit[ConfigModel.HOMENS] = R.id.editHomens;
-        idEdit[ConfigModel.MULHERES] = R.id.editMulheres;
-        idEdit[ConfigModel.CRIANCAS] = R.id.editCriancas;
-
-        nConvidados[ConfigModel.HOMENS] = 20;
-        nConvidados[ConfigModel.MULHERES] = 15;
-        nConvidados[ConfigModel.CRIANCAS] = 5;
-
-        for (int i = ConfigModel.HOMENS; i <= ConfigModel.CRIANCAS; i++) {
-            edit[i] = (EditInteger) findViewById(idEdit[i]);
-            edit[i].setIntValue(nConvidados[i]);
-        }
+        criaEdits();
         criaBtnMais();
         criaBtnMenos();
         criaEditListeners();
         criaCheckListeners();
-        calcula();
+        atualizaResultado();
+    }
+
+    private void criaEdits() {
+        int[] idEdit = new int[Churrasco.nTiposConvidados];
+        idEdit[Churrasco.HOMENS] = R.id.editHomens;
+        idEdit[Churrasco.MULHERES] = R.id.editMulheres;
+        idEdit[Churrasco.CRIANCAS] = R.id.editCriancas;
+
+        for (int i = Churrasco.HOMENS; i <= Churrasco.CRIANCAS; i++) {
+            edit[i] = (EditInteger) findViewById(idEdit[i]);
+            edit[i].setIntValue(nConvidados[i]);
+        }
     }
 
     private void criaBtnMais() {
-        IncrementButton[] btnMais = new IncrementButton[ConfigModel.nTiposConvidados];
-        btnMais[ConfigModel.HOMENS] = (IncrementButton)findViewById(R.id.btnMaisHomens);
-        btnMais[ConfigModel.MULHERES] = (IncrementButton)findViewById(R.id.btnMaisMulheres);
-        btnMais[ConfigModel.CRIANCAS] = (IncrementButton)findViewById(R.id.btnMaisCriancas);
+        IncrementButton[] btnMais = new IncrementButton[Churrasco.nTiposConvidados];
+        btnMais[Churrasco.HOMENS] = (IncrementButton)findViewById(R.id.btnMaisHomens);
+        btnMais[Churrasco.MULHERES] = (IncrementButton)findViewById(R.id.btnMaisMulheres);
+        btnMais[Churrasco.CRIANCAS] = (IncrementButton)findViewById(R.id.btnMaisCriancas);
 
-        for (int i=ConfigModel.HOMENS; i<=ConfigModel.CRIANCAS; i++)
+        for (int i= Churrasco.HOMENS; i<= Churrasco.CRIANCAS; i++)
             btnMais[i].setAssociatedEdit(edit[i]);
     }
 
     private void criaBtnMenos() {
-        DecrementButton[] btnMenos = new DecrementButton[ConfigModel.nTiposConvidados];
+        DecrementButton[] btnMenos = new DecrementButton[Churrasco.nTiposConvidados];
 
-        btnMenos[ConfigModel.HOMENS] = (DecrementButton)findViewById(R.id.btnMenosHomens);
-        btnMenos[ConfigModel.MULHERES] = (DecrementButton)findViewById(R.id.btnMenosMulheres);
-        btnMenos[ConfigModel.CRIANCAS] = (DecrementButton)findViewById(R.id.btnMenosCriancas);
+        btnMenos[Churrasco.HOMENS] = (DecrementButton)findViewById(R.id.btnMenosHomens);
+        btnMenos[Churrasco.MULHERES] = (DecrementButton)findViewById(R.id.btnMenosMulheres);
+        btnMenos[Churrasco.CRIANCAS] = (DecrementButton)findViewById(R.id.btnMenosCriancas);
 
-        for (int i=ConfigModel.HOMENS; i<=ConfigModel.CRIANCAS; i++)
+        for (int i= Churrasco.HOMENS; i<= Churrasco.CRIANCAS; i++)
             btnMenos[i].setAssociatedEdit(edit[i]);
     }
 
     private void criaEditListeners() {
-        edit[ConfigModel.HOMENS].addTextChangedListener(new TextWatcher() {
+        edit[Churrasco.HOMENS].addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -93,11 +95,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                nConvidados[ConfigModel.HOMENS] = edit[ConfigModel.HOMENS].getIntValue();
-                calcula();
+                nConvidados[Churrasco.HOMENS] = edit[Churrasco.HOMENS].getIntValue();
+                atualizaResultado();
             }
         });
-        edit[ConfigModel.MULHERES].addTextChangedListener(new TextWatcher() {
+        edit[Churrasco.MULHERES].addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -108,11 +110,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                nConvidados[ConfigModel.MULHERES] = edit[ConfigModel.MULHERES].getIntValue();
-                calcula();
+                nConvidados[Churrasco.MULHERES] = edit[Churrasco.MULHERES].getIntValue();
+                atualizaResultado();
             }
         });
-        edit[ConfigModel.CRIANCAS].addTextChangedListener(new TextWatcher() {
+        edit[Churrasco.CRIANCAS].addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -123,85 +125,65 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                nConvidados[ConfigModel.CRIANCAS] = edit[ConfigModel.CRIANCAS].getIntValue();
-                calcula();
+                nConvidados[Churrasco.CRIANCAS] = edit[Churrasco.CRIANCAS].getIntValue();
+                atualizaResultado();
             }
         });
     }
 
     private void criaCheckListeners() {
-        check[ConfigModel.CARNE] = (CheckBox)findViewById(R.id.checkCarne);
-        check[ConfigModel.LINGUICA] = (CheckBox)findViewById(R.id.checkLinguica);
-        check[ConfigModel.CERVEJA] = (CheckBox)findViewById(R.id.checkCerveja);
-        check[ConfigModel.REFRI] = (CheckBox)findViewById(R.id.checkRefri);
+        check[Churrasco.CARNE] = (CheckBox)findViewById(R.id.checkCarne);
+        check[Churrasco.LINGUICA] = (CheckBox)findViewById(R.id.checkLinguica);
+        check[Churrasco.CERVEJA] = (CheckBox)findViewById(R.id.checkCerveja);
+        check[Churrasco.REFRI] = (CheckBox)findViewById(R.id.checkRefri);
 
-        check[ConfigModel.CARNE].setOnClickListener(new View.OnClickListener() {
+        check[Churrasco.CARNE].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check[ConfigModel.LINGUICA].setEnabled(check[ConfigModel.CARNE].isChecked());
-                calcula();
+                check[Churrasco.LINGUICA].setEnabled(check[Churrasco.CARNE].isChecked());
+                atualizaResultado();
             }
         });
-        check[ConfigModel.LINGUICA].setOnClickListener(new View.OnClickListener() {
+        check[Churrasco.LINGUICA].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check[ConfigModel.CARNE].setEnabled(check[ConfigModel.LINGUICA].isChecked());
-                calcula();
+                check[Churrasco.CARNE].setEnabled(check[Churrasco.LINGUICA].isChecked());
+                atualizaResultado();
             }
         });
-        check[ConfigModel.CERVEJA].setOnClickListener(new View.OnClickListener() {
+        check[Churrasco.CERVEJA].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check[ConfigModel.REFRI].setEnabled(check[ConfigModel.CERVEJA].isChecked());
-                calcula();
+                check[Churrasco.REFRI].setEnabled(check[Churrasco.CERVEJA].isChecked());
+                atualizaResultado();
             }
         });
-        check[ConfigModel.REFRI].setOnClickListener(new View.OnClickListener() {
+        check[Churrasco.REFRI].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                check[ConfigModel.CERVEJA].setEnabled(check[ConfigModel.REFRI].isChecked());
-                calcula();
+                check[Churrasco.CERVEJA].setEnabled(check[Churrasco.REFRI].isChecked());
+                atualizaResultado();
             }
         });
     }
 
-    private void calcula() {
-        TextView[] result = new TextView[ConfigModel.nTiposIngredientes];
-        result[ConfigModel.CARNE] = (TextView)findViewById(R.id.resultCarne);
-        result[ConfigModel.LINGUICA] = (TextView)findViewById(R.id.resultLinguica);
-        result[ConfigModel.CERVEJA] = (TextView)findViewById(R.id.resultCerveja);
-        result[ConfigModel.REFRI] = (TextView)findViewById(R.id.resultRefri);
+    private void atualizaResultado() {
+        for (int i=Churrasco.HOMENS; i<=Churrasco.CRIANCAS; i++)
+            churrasco.setNumeroConvidados(i, nConvidados[i]);
 
-        double[] quant = new double[ConfigModel.nTiposIngredientes];
-        for (int i=ConfigModel.CARNE; i<=ConfigModel.REFRI;i++) {
-            quant[i] = 0;
-            for (int j=ConfigModel.HOMENS; j<=ConfigModel.CRIANCAS; j++) {
-                quant[i] += nConvidados[j] * config.Consumo(j,i);
-            }
-        }
+        for (int j=Churrasco.CARNE; j<=Churrasco.REFRI; j++)
+            churrasco.setIngredienteCheck(j, check[j].isChecked());
 
-        if (!check[ConfigModel.CARNE].isChecked()) {
-            quant[ConfigModel.LINGUICA] += quant[ConfigModel.CARNE];
-            quant[ConfigModel.CARNE] = 0;
-        }
-        else if (!check[ConfigModel.LINGUICA].isChecked()) {
-            quant[ConfigModel.CARNE] += quant[ConfigModel.LINGUICA];
-            quant[ConfigModel.LINGUICA] = 0;
-        }
+        TextView[] result = new TextView[Churrasco.nTiposIngredientes];
+        result[Churrasco.CARNE] = (TextView)findViewById(R.id.resultCarne);
+        result[Churrasco.LINGUICA] = (TextView)findViewById(R.id.resultLinguica);
+        result[Churrasco.CERVEJA] = (TextView)findViewById(R.id.resultCerveja);
+        result[Churrasco.REFRI] = (TextView)findViewById(R.id.resultRefri);
 
-        if (!check[ConfigModel.CERVEJA].isChecked()) {
-            quant[ConfigModel.REFRI] += quant[ConfigModel.CERVEJA];
-            quant[ConfigModel.CERVEJA] = 0;
-        }
-        else if (!check[ConfigModel.REFRI].isChecked()) {
-            quant[ConfigModel.CERVEJA] += quant[ConfigModel.REFRI];
-            quant[ConfigModel.REFRI] = 0;
-        }
-
-        result[ConfigModel.CARNE].setText(String.format("%1$,.1f kg",quant[ConfigModel.CARNE]));
-        result[ConfigModel.LINGUICA].setText(String.format("%1$,.1f kg", quant[ConfigModel.LINGUICA]));
-        result[ConfigModel.CERVEJA].setText(String.format("%1$,.1f l", quant[ConfigModel.CERVEJA]));
-        result[ConfigModel.REFRI].setText(String.format("%1$,.1f l", quant[ConfigModel.REFRI]));
+        result[Churrasco.CARNE].setText(churrasco.consumoAsString(Churrasco.CARNE));
+        result[Churrasco.LINGUICA].setText(churrasco.consumoAsString(Churrasco.LINGUICA));
+        result[Churrasco.CERVEJA].setText(churrasco.consumoAsString(Churrasco.CERVEJA));
+        result[Churrasco.REFRI].setText(churrasco.consumoAsString(Churrasco.REFRI));
     }
 
     private void criaBtnAjuda() {
