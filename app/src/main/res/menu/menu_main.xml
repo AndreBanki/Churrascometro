@@ -6,6 +6,9 @@
         android:id="@+id/btnConfig"
         android:title="@string/action_settings"
         android:icon="@android:drawable/ic_menu_manage"
-        android:orderInCategory="100"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/resetPrefs"
+        android:title="Reset"
+        app:showAsAction="never" />
 </menu>

@@ -1,8 +1,10 @@
 package com.banki.churrascometro;
 
+import android.content.SharedPreferences;
+
 import java.io.Serializable;
 
-public class Churrasco implements Serializable {
+public class Churrasco {
 
     // tipos de convidados
     public static final int nTiposConvidados = 3;
@@ -43,6 +45,23 @@ public class Churrasco implements Serializable {
         parametros[HOMENS][REFRI] = 0.200;
         parametros[MULHERES][REFRI] = 0.500;
         parametros[CRIANCAS][REFRI] = 0.500;
+    }
+
+    public void saveConvidados(SharedPreferences settings) {
+        SharedPreferences.Editor editor = settings.edit();
+        for (int i=HOMENS; i<=CRIANCAS; i++) {
+            String key = "Convidados_" + i;
+            editor.putInt(key,numeroConvidados[i]);
+        }
+        editor.commit();
+    }
+
+    public void restoreConvidados(SharedPreferences settings) {
+        for (int i=HOMENS; i<=CRIANCAS; i++) {
+            String key = "Convidados_" + i;
+            // return current value (default) if prefs not present
+            numeroConvidados[i] = settings.getInt(key, numeroConvidados[i]);
+        }
     }
 
     public void setIngredienteCheck(int tipo, boolean value) {
