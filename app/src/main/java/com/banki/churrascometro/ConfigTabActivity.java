@@ -34,7 +34,7 @@ public class ConfigTabActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         for (int i=Churrasco.CARNE; i<=Churrasco.REFRI; i++)
-            churrasco.setParametroConsumo(tipo, i, (float) edit[i].getIntValue() / 1000);
+            churrasco.setParametroConsumo(tipo, i, edit[i].getIntValue());
 
         churrasco.saveParametrosConsumo(settings, tipo);
         super.onPause();
@@ -56,7 +56,7 @@ public class ConfigTabActivity extends AppCompatActivity
         edit[Churrasco.REFRI] = (EditInteger) findViewById(R.id.editRefri);
 
         for (int i= Churrasco.CARNE; i<= Churrasco.REFRI; i++) {
-            double valor = 1000*churrasco.getParametroConsumo(tipo, i);
+            double valor = churrasco.getParametroConsumo(tipo, i);
             edit[i].setIntValue((int)valor);
         }
     }

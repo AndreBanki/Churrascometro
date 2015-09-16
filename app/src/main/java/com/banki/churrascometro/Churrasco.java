@@ -20,7 +20,7 @@ public class Churrasco {
     public static final int REFRI = 3;
 
     // quantidade consumida por tipo de convidado
-    double[][] parametros = new double[nTiposConvidados][nTiposIngredientes];
+    int[][] parametros = new int[nTiposConvidados][nTiposIngredientes];
 
     // ingredientes escolhidos
     boolean[] ingredienteCheck = new boolean[nTiposIngredientes];
@@ -33,18 +33,18 @@ public class Churrasco {
         numeroConvidados[MULHERES] = 15;
         numeroConvidados[CRIANCAS] = 5;
 
-        parametros[HOMENS][CARNE] = 0.450;
-        parametros[MULHERES][CARNE] = 0.300;
-        parametros[CRIANCAS][CARNE] = 0.150;
-        parametros[HOMENS][LINGUICA] = 0.300;
-        parametros[MULHERES][LINGUICA] = 0.200;
-        parametros[CRIANCAS][LINGUICA] = 0.050;
-        parametros[HOMENS][CERVEJA] = 1.250;
-        parametros[MULHERES][CERVEJA] = 0.500;
+        parametros[HOMENS][CARNE] = 450;
+        parametros[MULHERES][CARNE] = 300;
+        parametros[CRIANCAS][CARNE] = 150;
+        parametros[HOMENS][LINGUICA] = 300;
+        parametros[MULHERES][LINGUICA] = 200;
+        parametros[CRIANCAS][LINGUICA] = 50;
+        parametros[HOMENS][CERVEJA] = 1250;
+        parametros[MULHERES][CERVEJA] = 500;
         parametros[CRIANCAS][CERVEJA] = 0;
-        parametros[HOMENS][REFRI] = 0.200;
-        parametros[MULHERES][REFRI] = 0.500;
-        parametros[CRIANCAS][REFRI] = 0.500;
+        parametros[HOMENS][REFRI] = 200;
+        parametros[MULHERES][REFRI] = 500;
+        parametros[CRIANCAS][REFRI] = 500;
     }
 
     public void saveConvidados(SharedPreferences settings) {
@@ -68,7 +68,7 @@ public class Churrasco {
         SharedPreferences.Editor editor = settings.edit();
         for (int i=CARNE; i<=REFRI; i++) {
             String key = "Consumo_" + i + "_" + tipoConvidado;
-            editor.putFloat(key, (float) parametros[tipoConvidado][i]);
+            editor.putInt(key, parametros[tipoConvidado][i]);
         }
         editor.commit();
     }
@@ -77,7 +77,7 @@ public class Churrasco {
         for (int i=CARNE; i<=REFRI; i++) {
             String key = "Consumo_" + i + "_" + tipoConvidado;
             // return current value (default) if prefs not present
-            parametros[tipoConvidado][i] = settings.getFloat(key, (float)parametros[tipoConvidado][i]);
+            parametros[tipoConvidado][i] = settings.getInt(key, parametros[tipoConvidado][i]);
         }
     }
 
@@ -93,27 +93,27 @@ public class Churrasco {
         return numeroConvidados[tipo];
     }
 
-    public void setParametroConsumo(int tipoConvidado, int ingrediente, float valor) {
+    public void setParametroConsumo(int tipoConvidado, int ingrediente, int valor) {
         parametros[tipoConvidado][ingrediente] = valor;
     }
 
-    public double getParametroConsumo(int tipoConvidado, int ingrediente) {
+    public int getParametroConsumo(int tipoConvidado, int ingrediente) {
         return parametros[tipoConvidado][ingrediente];
     }
 
-    private double consumo(int ingrediente) {
-        double quant = 0;
+    private int consumo(int ingrediente) {
+        int quant = 0;
         for (int i=HOMENS; i<=CRIANCAS; i++) {
             quant += numeroConvidados[i] * parametros[i][ingrediente];
         }
         return quant;
     }
 
-    private double consumoCorrigido(int ingrediente) {
+    private int  consumoCorrigido(int ingrediente) {
         if (!ingredienteCheck[ingrediente])
             return 0;
 
-        double quant = consumo(ingrediente);
+        int quant = consumo(ingrediente);
 
         int ingredienteCombinado = 0;
         if (ingrediente == CARNE)
@@ -133,9 +133,9 @@ public class Churrasco {
 
     public String getConsumoAsString(int ingrediente) {
         if (ingrediente == CARNE || ingrediente == LINGUICA)
-            return String.format("%1$,.1f kg", consumoCorrigido(ingrediente));
+            return String.format("%1$,.1f kg", (float)consumoCorrigido(ingrediente)/1000);
         else
-            return String.format("%1$,.1f l", consumoCorrigido(ingrediente));
+            return String.format("%1$,.1f l", (float)consumoCorrigido(ingrediente)/1000);
     }
 
 }
