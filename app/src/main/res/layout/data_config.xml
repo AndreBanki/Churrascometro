@@ -21,36 +21,39 @@
         android:stretchColumns="1">
         <TableRow>
             <TextView style="@style/texto"
-                android:text="Carne (kg):" />
+                android:text="Carne (g):" />
 
-            <EditText style="@style/editNumero"
+            <com.banki.utils.EditInteger
+                style="@style/editNumero"
                 android:id="@+id/editCarne"
-                android:text="5,0" />
+                android:text="400" />
         </TableRow>
         <TableRow>
             <TextView style="@style/texto"
-                android:text="Linguiça (kg):" />
+                android:text="Linguiça (g):" />
 
-            <EditText style="@style/editNumero"
+            <com.banki.utils.EditInteger
+                style="@style/editNumero"
                 android:id="@+id/editLinguica"
-                android:text="2,5" />
+                android:text="250" />
         </TableRow>
         <TableRow>
             <TextView style="@style/texto"
-                android:text="Cerveja (l):" />
+                android:text="Cerveja (ml):" />
 
-            <EditText style="@style/editNumero"
+            <com.banki.utils.EditInteger
+                style="@style/editNumero"
                 android:id="@+id/editCerveja"
-                android:text="12,0"
+                android:text="1200"
                 />
         </TableRow>
         <TableRow>
             <TextView style="@style/texto"
-                android:text="Refrigerante (l):" />
+                android:text="Refrigerante (ml):" />
 
-            <EditText style="@style/editNumero"
+            <com.banki.utils.EditInteger style="@style/editNumero"
                 android:id="@+id/editRefri"
-                android:text="6,0" />
+                android:text="600" />
         </TableRow>
     </TableLayout>
 </LinearLayout>

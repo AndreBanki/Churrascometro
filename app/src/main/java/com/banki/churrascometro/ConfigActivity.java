@@ -18,15 +18,16 @@ public class ConfigActivity extends TabActivity {
         setContentView(R.layout.activity_config);
 
         TabHost tabHost = getTabHost();
-        ArrayList<String> tipos = new ArrayList<String>(
+        ArrayList<String> tipoConvidado = new ArrayList<String>(
                 Arrays.asList("Homens", "Mulheres", "Crianças"));
-        int nTabs = tipos.size();
 
-        for (int i = 0; i < nTabs; i++) {
-            TabSpec tab = tabHost.newTabSpec(tipos.get(i));
-            tab.setIndicator(tipos.get(i));
+        for (int tipo = 0; tipo < Churrasco.nTiposConvidados; tipo++) {
+            TabSpec tab = tabHost.newTabSpec(tipoConvidado.get(tipo));
+            tab.setIndicator(tipoConvidado.get(tipo));
+
             Intent intent = new Intent(this, ConfigTabActivity.class);
-            intent.putExtra("tipo",tipos.get(i));
+            intent.putExtra("tipoConvidado", tipo);
+
             tab.setContent(intent);
             tabHost.addTab(tab);
         }

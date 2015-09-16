@@ -40,8 +40,8 @@ public class Churrasco {
         parametros[MULHERES][LINGUICA] = 0.200;
         parametros[CRIANCAS][LINGUICA] = 0.050;
         parametros[HOMENS][CERVEJA] = 1.250;
-        parametros[MULHERES][CARNE] = 0.500;
-        parametros[CRIANCAS][CARNE] = 0;
+        parametros[MULHERES][CERVEJA] = 0.500;
+        parametros[CRIANCAS][CERVEJA] = 0;
         parametros[HOMENS][REFRI] = 0.200;
         parametros[MULHERES][REFRI] = 0.500;
         parametros[CRIANCAS][REFRI] = 0.500;
@@ -64,6 +64,23 @@ public class Churrasco {
         }
     }
 
+    public void saveParametrosConsumo(SharedPreferences settings, int tipoConvidado) {
+        SharedPreferences.Editor editor = settings.edit();
+        for (int i=CARNE; i<=REFRI; i++) {
+            String key = "Consumo_" + i + "_" + tipoConvidado;
+            editor.putFloat(key, (float) parametros[tipoConvidado][i]);
+        }
+        editor.commit();
+    }
+
+    public void restoreParametrosConsumo(SharedPreferences settings, int tipoConvidado) {
+        for (int i=CARNE; i<=REFRI; i++) {
+            String key = "Consumo_" + i + "_" + tipoConvidado;
+            // return current value (default) if prefs not present
+            parametros[tipoConvidado][i] = settings.getFloat(key, (float)parametros[tipoConvidado][i]);
+        }
+    }
+
     public void setIngredienteCheck(int tipo, boolean value) {
         ingredienteCheck[tipo] = value;
     }
@@ -74,6 +91,14 @@ public class Churrasco {
 
     public int getNumeroConvidados(int tipo) {
         return numeroConvidados[tipo];
+    }
+
+    public void setParametroConsumo(int tipoConvidado, int ingrediente, float valor) {
+        parametros[tipoConvidado][ingrediente] = valor;
+    }
+
+    public double getParametroConsumo(int tipoConvidado, int ingrediente) {
+        return parametros[tipoConvidado][ingrediente];
     }
 
     private double consumo(int ingrediente) {
