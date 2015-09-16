@@ -1,5 +1,7 @@
 package com.banki.churrascometro;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,11 +19,29 @@ import com.banki.utils.DecrementButton;
 import com.banki.utils.EditInteger;
 import com.banki.utils.IncrementButton;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.StreamCorruptedException;
+import java.util.List;
+import java.util.logging.Level;
+
 import static android.widget.Toast.LENGTH_LONG;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Churrasco churrasco = new Churrasco();
+    private Churrasco churrasco = null;
+    private String FILENAME = "churras_file";
     private EditInteger[] edit = new EditInteger[Churrasco.nTiposConvidados];
     private CheckBox[] check = new CheckBox[Churrasco.nTiposIngredientes];
     private TextView[] result = new TextView[Churrasco.nTiposIngredientes];
@@ -31,9 +51,44 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        criaBtnAjuda();
+    }
+
+    @Override
+    protected void onPause() {
+        FileOutputStream outFile;
+        ObjectOutput output;
+        try {
+            outFile = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            output = new ObjectOutputStream(outFile);
+
+            output.writeObject(churrasco);
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        InputStream inFile;
+        ObjectInput input;
+        try {
+            inFile = openFileInput(FILENAME);
+            input = new ObjectInputStream(inFile);
+
+            churrasco = (Churrasco)input.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (churrasco == null)
+            churrasco = new Churrasco();
+
         inicializaControles();
         atualizaResultado();
-        criaBtnAjuda();
+
+        super.onResume();
     }
 
     private void inicializaControles() {
