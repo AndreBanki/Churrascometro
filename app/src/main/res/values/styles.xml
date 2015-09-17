@@ -34,5 +34,6 @@
     </style>
     <style name="CheckBox" parent="texto">
         <item name="android:button">@drawable/abc_btn_check_material</item>
+        <item name="android:checked">true</item>
     </style>
 </resources>
