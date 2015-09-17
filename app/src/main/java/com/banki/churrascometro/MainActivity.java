@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        churrasco.restoreConvidados(settings);
+        churrasco.restoreAllData(settings);
 
         inicializaControles();
         atualizaResultado();

@@ -81,6 +81,12 @@ public class Churrasco {
         }
     }
 
+    public void restoreAllData(SharedPreferences settings) {
+        restoreConvidados(settings);
+        for (int i=HOMENS; i<=CRIANCAS; i++)
+            restoreParametrosConsumo(settings, i);
+    }
+
     public void setIngredienteCheck(int tipo, boolean value) {
         ingredienteCheck[tipo] = value;
     }
