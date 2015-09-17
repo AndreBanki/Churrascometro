@@ -14,7 +14,6 @@ import java.util.Arrays;
 
 public class ConfigTabActivity extends AppCompatActivity
 {
-    private static final String PREFS_NAME = "ChurrasPref";
     private Churrasco churrasco = new Churrasco();
     int tipo;
     SharedPreferences settings;
@@ -28,7 +27,7 @@ public class ConfigTabActivity extends AppCompatActivity
         setContentView(R.layout.data_config);
 
         tipo = getIntent().getIntExtra("tipoConvidado",0);
-        settings = getSharedPreferences(PREFS_NAME, 0);
+        settings = getSharedPreferences(Churrasco.PREFS_NAME, 0);
     }
 
     @Override
@@ -43,9 +42,7 @@ public class ConfigTabActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         churrasco.restoreParametrosConsumo(settings, tipo);
-
         inicializaControles();
-
         super.onResume();
     }
 
@@ -55,9 +52,7 @@ public class ConfigTabActivity extends AppCompatActivity
         edit[Churrasco.CERVEJA] = (EditInteger) findViewById(R.id.editCerveja);
         edit[Churrasco.REFRI] = (EditInteger) findViewById(R.id.editRefri);
 
-        for (int i= Churrasco.CARNE; i<= Churrasco.REFRI; i++) {
-            double valor = churrasco.getParametroConsumo(tipo, i);
-            edit[i].setIntValue((int)valor);
-        }
+        for (int i= Churrasco.CARNE; i<= Churrasco.REFRI; i++)
+            edit[i].setIntValue(churrasco.getParametroConsumo(tipo, i));
     }
 }

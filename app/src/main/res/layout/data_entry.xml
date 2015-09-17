@@ -18,12 +18,12 @@
 
         <com.banki.utils.EditInteger
             style="@style/editNumeroLargFixa"
-            android:id="@+id/editHomens"
-            android:text="10" />
+            android:id="@+id/editHomens" />
 
         <com.banki.utils.IncrementButton
             style="@style/PlusButton"
-            android:id="@+id/btnMaisHomens" />
+            android:id="@+id/btnMaisHomens"
+            android:singleLine="false" />
     </TableRow>
     <TableRow>
         <TextView style="@style/texto"
@@ -35,8 +35,7 @@
 
         <com.banki.utils.EditInteger
             style="@style/editNumeroLargFixa"
-            android:id="@+id/editMulheres"
-            android:text="10" />
+            android:id="@+id/editMulheres" />
 
         <com.banki.utils.IncrementButton
             style="@style/PlusButton"
@@ -52,8 +51,7 @@
 
         <com.banki.utils.EditInteger
             style="@style/editNumeroLargFixa"
-            android:id="@+id/editCriancas"
-            android:text="5" />
+            android:id="@+id/editCriancas" />
 
         <com.banki.utils.IncrementButton
             style="@style/PlusButton"

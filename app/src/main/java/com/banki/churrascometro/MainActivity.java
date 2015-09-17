@@ -41,7 +41,6 @@ import static android.widget.Toast.LENGTH_LONG;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PREFS_NAME = "ChurrasPref";
     private Churrasco churrasco = new Churrasco();
     SharedPreferences settings;
 
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        settings = getSharedPreferences(PREFS_NAME, 0);
+        settings = getSharedPreferences(Churrasco.PREFS_NAME, 0);
         criaBtnAjuda();
     }
 
@@ -67,10 +66,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         churrasco.restoreAllData(settings);
-
         inicializaControles();
         atualizaResultado();
-
         super.onResume();
     }
 

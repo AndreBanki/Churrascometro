@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class Churrasco {
 
+    public static final String PREFS_NAME = "ChurrasPref";
+
     // tipos de convidados
     public static final int nTiposConvidados = 3;
     public static final int HOMENS = 0;

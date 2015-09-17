@@ -22,8 +22,7 @@
         <TableRow>
             <CheckBox style="@style/CheckBox"
                 android:id="@+id/checkCarne"
-                android:text="Carne:"
-                android:checked="true" />
+                android:text="Carne:" />
 
             <TextView style="@style/numero"
                 android:id="@+id/resultCarne"
@@ -32,8 +31,7 @@
         <TableRow>
             <CheckBox style="@style/CheckBox"
                 android:id="@+id/checkLinguica"
-                android:text="Linguiça:"
-                android:checked="true" />
+                android:text="Linguiça:" />
 
             <TextView style="@style/numero"
                 android:id="@+id/resultLinguica"
@@ -42,8 +40,7 @@
         <TableRow>
             <CheckBox style="@style/CheckBox"
                 android:id="@+id/checkCerveja"
-                android:text="Cerveja:"
-                android:checked="true" />
+                android:text="Cerveja:" />
 
             <TextView style="@style/numero"
                 android:id="@+id/resultCerveja"
@@ -53,8 +50,7 @@
         <TableRow>
             <CheckBox style="@style/CheckBox"
                 android:id="@+id/checkRefri"
-                android:text="Refrigerante:"
-                android:checked="true" />
+                android:text="Refrigerante:" />
 
             <TextView style="@style/numero"
                 android:id="@+id/resultRefri"
