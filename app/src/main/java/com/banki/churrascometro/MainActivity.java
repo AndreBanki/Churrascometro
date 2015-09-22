@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -21,7 +22,7 @@ import com.banki.utils.IncrementButton;
 
 import static android.widget.Toast.LENGTH_LONG;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private Churrasco churrasco = new Churrasco();
     SharedPreferences settings;
@@ -33,7 +34,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
 
         settings = getSharedPreferences(Churrasco.PREFS_NAME, 0);
