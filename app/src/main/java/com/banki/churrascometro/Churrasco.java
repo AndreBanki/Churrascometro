@@ -2,8 +2,6 @@ package com.banki.churrascometro;
 
 import android.content.SharedPreferences;
 
-import java.io.Serializable;
-
 public class Churrasco {
 
     public static final String PREFS_NAME = "ChurrasPref";

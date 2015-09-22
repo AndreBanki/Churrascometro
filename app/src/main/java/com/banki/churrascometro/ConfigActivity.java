@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
-import android.widget.TabWidget;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +20,16 @@ public class ConfigActivity extends TabActivity {
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_config);
 
+        criaHomeButton();
+        setupTabs();
+    }
+
+    private void criaHomeButton() {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
+    private void setupTabs() {
         TabHost tabHost = getTabHost();
         ArrayList<String> tipoConvidado = new ArrayList<String>(
                 Arrays.asList("Homens", "Mulheres", "Crianças"));

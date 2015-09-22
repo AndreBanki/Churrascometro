@@ -7,8 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.banki.utils.EditInteger;
-
 public class IncrementButton extends Button {
 
     protected EditInteger associatedEdit = null;
