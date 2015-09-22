@@ -1,16 +1,16 @@
 package com.banki.churrascometro;
 
-import android.content.Context;
-import android.content.ContextWrapper;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -20,26 +20,9 @@ import com.banki.utils.DecrementButton;
 import com.banki.utils.EditInteger;
 import com.banki.utils.IncrementButton;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.StreamCorruptedException;
-import java.util.List;
-import java.util.logging.Level;
-
 import static android.widget.Toast.LENGTH_LONG;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private Churrasco churrasco = new Churrasco();
     SharedPreferences settings;
@@ -51,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_main);
 
         settings = getSharedPreferences(Churrasco.PREFS_NAME, 0);

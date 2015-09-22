@@ -3,16 +3,9 @@ package com.banki.churrascometro;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
-import android.widget.TextView;
-
 import com.banki.utils.EditInteger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class ConfigTabActivity extends AppCompatActivity
+public class ConfigTabActivity extends Activity
 {
     private Churrasco churrasco = new Churrasco();
     int tipo;
