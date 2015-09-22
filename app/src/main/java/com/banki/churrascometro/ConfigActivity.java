@@ -1,18 +1,15 @@
 package com.banki.churrascometro;
 
 import android.app.ActionBar;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public class ConfigActivity extends TabActivity {
+public class ConfigActivity extends FragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,24 +23,18 @@ public class ConfigActivity extends TabActivity {
 
     private void criaHomeButton() {
         ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupTabs() {
-        TabHost tabHost = getTabHost();
-        ArrayList<String> tipoConvidado = new ArrayList<String>(
-                Arrays.asList("Homens", "Mulheres", "Crianças"));
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new ConfigTabPagerAdapter(getSupportFragmentManager(),ConfigActivity.this));
 
-        for (int tipo = 0; tipo < Churrasco.nTiposConvidados; tipo++) {
-            TabSpec tab = tabHost.newTabSpec(tipoConvidado.get(tipo));
-            tab.setIndicator(tipoConvidado.get(tipo));
-
-            Intent intent = new Intent(this, ConfigTabActivity.class);
-            intent.putExtra("tipoConvidado", tipo);
-
-            tab.setContent(intent);
-            tabHost.addTab(tab);
-        }
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
