@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         settings = getSharedPreferences(Churrasco.PREFS_NAME, 0);
+        criaControles();
         criaBtnAjuda();
     }
 
@@ -49,12 +50,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         churrasco.restoreAllData(settings);
-        inicializaControles();
-        atualizaResultado();
+        atualizaEdits();
         super.onResume();
     }
 
-    private void inicializaControles() {
+    private void criaControles() {
         criaEdits();
         criaBtnMais();
         criaBtnMenos();
@@ -80,10 +80,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        for (int i= Churrasco.HOMENS; i<= Churrasco.CRIANCAS; i++) {
-            edit[i].setIntValue(churrasco.getNumeroConvidados(i));
+        for (int i= Churrasco.HOMENS; i<= Churrasco.CRIANCAS; i++)
             edit[i].addTextChangedListener(textWatcher);
-        }
     }
 
     private void criaBtnMais() {
@@ -130,6 +128,12 @@ public class MainActivity extends AppCompatActivity {
         result[Churrasco.LINGUICA] = (TextView)findViewById(R.id.resultLinguica);
         result[Churrasco.CERVEJA] = (TextView)findViewById(R.id.resultCerveja);
         result[Churrasco.REFRI] = (TextView)findViewById(R.id.resultRefri);
+    }
+
+    private void atualizaEdits() {
+        for (int i= Churrasco.HOMENS; i<= Churrasco.CRIANCAS; i++)
+            edit[i].setIntValue(churrasco.getNumeroConvidados(i));
+        atualizaResultado();
     }
 
     private void atualizaChecks() {
