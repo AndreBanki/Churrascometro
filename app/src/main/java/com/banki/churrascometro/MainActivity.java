@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private EditInteger[] edit = new EditInteger[Churrasco.nTiposConvidados];
     private CheckBox[] check = new CheckBox[Churrasco.nTiposIngredientes];
     private TextView[] result = new TextView[Churrasco.nTiposIngredientes];
+    private boolean restoringState = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         churrasco.restoreAllData(settings);
+
+        // faz com que a atualização da tela não seja feita até acabar de preencher os edits
+        restoringState = true;
         atualizaEdits();
+        restoringState = false;
+        atualizaResultado();
+
         super.onResume();
     }
 
@@ -115,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 atualizaChecks();
+                atualizaResultado();
             }
         };
 
@@ -133,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
     private void atualizaEdits() {
         for (int i= Churrasco.HOMENS; i<= Churrasco.CRIANCAS; i++)
             edit[i].setIntValue(churrasco.getNumeroConvidados(i));
-        atualizaResultado();
     }
 
     private void atualizaChecks() {
@@ -141,20 +148,21 @@ public class MainActivity extends AppCompatActivity {
         check[Churrasco.CARNE].setEnabled(check[Churrasco.LINGUICA].isChecked());
         check[Churrasco.REFRI].setEnabled(check[Churrasco.CERVEJA].isChecked());
         check[Churrasco.CERVEJA].setEnabled(check[Churrasco.REFRI].isChecked());
-        atualizaResultado();
     }
 
     private void atualizaResultado() {
-        // obtem dados da interface
-        for (int i=Churrasco.HOMENS; i<=Churrasco.CRIANCAS; i++)
-            churrasco.setNumeroConvidados(i, edit[i].getIntValue());
+        if (!restoringState) {
+            // obtem dados da interface
+            for (int i = Churrasco.HOMENS; i <= Churrasco.CRIANCAS; i++)
+                churrasco.setNumeroConvidados(i, edit[i].getIntValue());
 
-        for (int j=Churrasco.CARNE; j<=Churrasco.REFRI; j++)
-            churrasco.setIngredienteCheck(j, check[j].isChecked());
+            for (int j = Churrasco.CARNE; j <= Churrasco.REFRI; j++)
+                churrasco.setIngredienteCheck(j, check[j].isChecked());
 
-        // preenche com os resultados calculados
-        for (int j=Churrasco.CARNE; j<=Churrasco.REFRI; j++)
-            result[j].setText(churrasco.getConsumoAsString(j));
+            // preenche com os resultados calculados
+            for (int j = Churrasco.CARNE; j <= Churrasco.REFRI; j++)
+                result[j].setText(churrasco.getConsumoAsString(j));
+        }
     }
 
     private void criaBtnAjuda() {
